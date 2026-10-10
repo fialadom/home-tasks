@@ -103,7 +103,7 @@ Typical use: a shopping list whose sections are store aisles ("Produce", "Frozen
 
 - **Multi-column layout** — display multiple lists side-by-side on a single card
 - **Per-column configuration** — title, icon, default filter, default sort, show/hide every field individually
-- **List or Tiles view** — choose per column between detailed task rows and a compact image grid (see [Tile View](#tile-view))
+- **List, Tiles or Board view** — choose per column between detailed task rows, a compact image grid (see [Tile View](#tile-view)) and a Kanban board with one lane per section (see [Board View](#board-view))
 - **Task images** — show a picture per task; optionally auto-generate them with AI (see [Task Images & AI Generation](#task-images--ai-generation))
 - **Sections** — group tasks under named headers with optional icons (see above)
 - **Drag & drop** reordering on desktop and mobile, including across sections
@@ -126,6 +126,26 @@ Set a column's **view mode** to **Tiles** for a compact, visual grid instead of 
 - **Tap** a tile to toggle completion
 - **Long-press** (or click & hold) a tile to open its **detail sheet** — the full editor with every field, including an editable title
 - **Drag** a tile to reorder, with the same live animations as the list view
+
+#### Board View
+
+Set a column's **view mode** to **Board** to show a list as a Kanban board: one **lane** per [section](#sections), in section order, plus a **Done** lane on the right. Lanes sit side by side and scroll horizontally when they do not fit — on a phone too, they never stack. A list without sections shows an *Open* and a *Done* lane; if open tasks have no (or an unknown) section, a *No section* lane comes first (`board_show_unsectioned`).
+
+- Every card is the normal task row: checkbox, badges, and a tap opens its details inline
+- **Drag** a card to another lane (mouse, or long-press on touch) to change its section; the order within the lane is saved too
+- Drop a card on **Done** to complete it — `confirm_complete`, `auto_delete_completed` and recurrence behave exactly as with the checkbox. Drop a done card on an open lane to reopen it in that section
+- The Done lane shows the newest completed tasks first (`board_done_limit`)
+- **+ Add a task** at the bottom of each open lane creates the task in that lane and stays open for the next one (Enter adds, Escape closes); the add row above the board keeps working as usual
+- The All / Open / Done filter row is hidden; tag and person chips, sort (inside each lane) and search keep working. While searching, the flat result list replaces the lanes
+
+```yaml
+type: custom:home-tasks-card
+columns:
+  - list_id: "your-list-id"        # sections: "K řešení", "Rozpracováno"
+    title: Projekt
+    view_mode: board
+    board_done_limit: 5
+```
 
 #### Voice Input
 
@@ -282,7 +302,11 @@ Each entry in `columns` accepts the following options.
 | `entity_id` | — | An external todo entity to display (use this **or** `list_id`) |
 | `title` | List name | Custom column title |
 | `icon` | — | MDI icon shown next to the column title (e.g. `mdi:home`) |
-| `view_mode` | `list` | Layout: `list` (detailed rows) or `tiles` (image grid) |
+| `view_mode` | `list` | Layout: `list` (detailed rows), `tiles` (image grid) or `board` (one lane per section, see [Board View](#board-view)) |
+| `board_done_column` | `true` | (Board view) Show the Done lane on the right; `false` hides it |
+| `board_done_limit` | `10` | (Board view) How many completed tasks the Done lane shows, newest first, with a "+N more" line when it cuts; `0` = all |
+| `board_show_unsectioned` | `auto` | (Board view) The leading *No section* lane for open tasks without a (known) section: `auto` shows it only while such a task exists, `true` always, `false` never. A list without sections has a single *Open* lane instead |
+| `board_add_per_lane` | `true` | (Board view) A "+ Add a task" button at the bottom of every open lane (native lists only; also needs `show_add_task`) |
 | `default_filter` | `all` | Initial filter: `all`, `open`, `done`, or `due_soon` |
 | `default_sort` | `manual` | Initial sort: `manual`, `due`, `priority`, `title`, or `person` |
 | `overdue_first` | `false` | Open overdue tasks lead the list — oldest due date first — whatever the sort; completed tasks stay at the bottom. Works within each section. With manual sort, an overdue task stays on top even when dragged; the position you drag it to applies once it's no longer overdue |
