@@ -46,6 +46,7 @@ test("recent feature keys are translated in every language", () => {
     "ed_queue_running", "ed_queue_cancel", "ed_share_images",
     "board_open", "board_no_section", "board_add_card", "board_more_done",
     "ed_board_done_column", "ed_board_add_per_lane", "ed_board_help",
+    "ed_layout", "ed_layout_columns", "ed_layout_tabs", "ed_tab_counts",
   ];
   for (const lang of Object.keys(t)) {
     for (const key of required) {

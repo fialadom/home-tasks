@@ -147,6 +147,23 @@ columns:
     board_done_limit: 5
 ```
 
+#### Tabs
+
+Set the card-level `layout` to `tabs` to put several lists on one card as **tabs** instead of side-by-side columns. The tab bar shows one text label per column (the column `title`, else the list name; plus its `icon` when set) and only the active column is shown. Every list keeps loading, so the open-task count next to each label (`tab_counts`, on by default) stays live and switching is instant. Each tab keeps its own view mode, filters, search and sort, so you can mix board and list tabs.
+
+- Click a tab or use the **left / right arrow keys** on a focused tab (wraps around)
+- The active tab is remembered per browser
+- With a single column the option has no effect; drag and drop between tabs is not possible
+
+```yaml
+type: custom:home-tasks-card
+layout: tabs
+tab_counts: true
+columns:
+  - { list_id: "household-list-id", title: Domácnost, view_mode: board }
+  - { list_id: "homelab-list-id",   title: Homelab,   view_mode: board }
+```
+
 #### Voice Input
 
 A mic button on the add-task row lets you dictate a task title instead of typing it. It uses Home Assistant's **Assist speech-to-text** when available and falls back to the browser's built-in speech recognition. Hide the button per column with `show_voice: false`.
@@ -354,6 +371,8 @@ These options live at the **root** of the card config, not inside a column.
 |--------|---------|-------------|
 | `columns` | — | List of column configs (required) |
 | `title` | — | Optional card title shown above the columns |
+| `layout` | `columns` | `columns` shows the columns side by side; `tabs` shows one tab per column and only the active column (see [Tabs](#tabs)) |
+| `tab_counts` | `true` | (Tabs layout) Show the number of open tasks next to each tab label |
 | `image_generation.entity_id` | — | An `ai_task.*` entity used to generate task images |
 | `image_generation.prompt_prefix` | — | Text prepended to every AI image prompt (e.g. `Minimalist icon of`) |
 | `grid_options` | — | Standard HA grid sizing (e.g. `columns: 36`, `rows: auto`) |
