@@ -112,7 +112,7 @@ Typical use: a shopping list whose sections are store aisles ("Produce", "Frozen
 - **Duplicate** a task with one click — the copy appears right after the original
 - **Filter** per column — All / Open / Done, plus optional **Due Soon** filter (shows tasks due within a configurable number of days)
 - **Sort** per column — manual, due date, priority, title, assigned person
-- **Tag & person filter chips** in the column header — tap to filter; assigning the active person to new tasks automatically
+- **Tag & person filter chips** in the column header — tap to filter; assigning the active person to new tasks automatically. An **Unassigned** chip (shown when some tasks have nobody assigned) combines with the person chips as OR, e.g. your tasks plus the ones still up for grabs
 - **Voice input** — dictate a new task title via the mic button (HA Assist speech-to-text, with browser speech as fallback)
 - **Compact mode** for denser task rows
 - **Auto-delete** completed tasks (optional, per column)
@@ -345,6 +345,7 @@ Each entry in `columns` accepts the following options.
 | `show_filters` | `true` | Show/hide the All / Open / Done filter buttons |
 | `show_tag_chips` | `true` | Show/hide the tag filter chips in the header |
 | `person_filter` | `name` | How the person filter row in the header shows people: `off`, `picture` (profile picture only), `name`, `both`. Replaces `show_person_chips` |
+| `show_unassigned_filter` | `true` | Show the **Unassigned** chip in the person filter row (only when some task has no assigned person and the row is shown) |
 | `show_due_soon_filter` | `false` | Enable the "Due Soon" filter button |
 | `due_soon_days` | `7` | Days ahead for the "Due Soon" filter (0–90, 0 = due today only) |
 | `hide_overdue` | `false` | Hide overdue tasks in the "Due Soon" filter (overdue shown by default) |
