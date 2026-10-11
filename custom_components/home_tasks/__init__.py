@@ -24,7 +24,14 @@ from .const import DOMAIN, RECURRENCE_UNIT_SECONDS, VALID_MONTH_PATTERNS
 
 CONFIG_SCHEMA = cv.config_entry_only_config_schema(DOMAIN)
 from .overlay_store import ExternalTaskOverlayStore
-from .store import HomeTasksStore, _REOPEN_UNCHANGED, validate_reminders
+from .store import (
+    HomeTasksStore,
+    MENTION_PATTERN,
+    UnknownPersonError,
+    _REOPEN_UNCHANGED,
+    extract_mentions,
+    validate_reminders,
+)
 from .websocket_api import async_move_task_any, async_register_websocket_commands
 
 _LOGGER = logging.getLogger(__name__)
@@ -297,6 +304,17 @@ def _build_event_data(hass: HomeAssistant, entry_id: str, task: dict) -> dict:
     return data
 
 
+def person_for_user(hass: HomeAssistant, user_id: str | None) -> str | None:
+    """The person.* entity linked to an HA user, if any."""
+    if not user_id:
+        return None
+    return next(
+        (s.entity_id for s in hass.states.async_all("person")
+         if s.attributes.get("user_id") == user_id),
+        None,
+    )
+
+
 def completed_by_data(hass: HomeAssistant, actor: str | None, user_id: str | None) -> dict:
     """Who completed a task, for the task_completed event (issue #65).
 
@@ -310,14 +328,74 @@ def completed_by_data(hass: HomeAssistant, actor: str | None, user_id: str | Non
         data["completed_by"] = actor
     if user_id:
         data["completed_by_user_id"] = user_id
-        person = next(
-            (s.entity_id for s in hass.states.async_all("person")
-             if s.attributes.get("user_id") == user_id),
-            None,
-        )
+        person = person_for_user(hass, user_id)
         if person:
             data["completed_by_person"] = person
     return data
+
+
+def check_mentions_exist(hass: HomeAssistant, text: str) -> None:
+    """Raise UnknownPersonError when a mention token names a missing person."""
+    for entity_id in extract_mentions(text):
+        if hass.states.get(entity_id) is None:
+            raise UnknownPersonError(f"Unknown person: {entity_id}")
+
+
+def render_mentions(hass: HomeAssistant, text: str) -> str:
+    """Replace mention tokens with @<friendly name> for event payloads."""
+    def _name(match) -> str:
+        entity_id = match.group(1)
+        state = hass.states.get(entity_id)
+        name = state.attributes.get("friendly_name") if state else None
+        return f"@{name or entity_id}"
+
+    return MENTION_PATTERN.sub(_name, text)
+
+
+def _comment_context(comment: dict) -> Context | None:
+    user_id = comment.get("by_user_id")
+    return Context(user_id=user_id) if user_id else None
+
+
+def _on_comment_added(hass: HomeAssistant, entry_id: str, task: dict, comment: dict) -> None:
+    """Fire home_tasks_comment_added and one comment_mention per mentioned person."""
+    rendered = render_mentions(hass, comment["text"])[:255]
+    data = _build_event_data(hass, entry_id, task)
+    data["comment_id"] = comment["id"]
+    for key in ("by", "by_user_id", "by_person"):
+        if comment.get(key):
+            data[key] = comment[key]
+    data["text"] = rendered
+    if comment.get("mentions"):
+        data["mentions"] = list(comment["mentions"])
+    context = _comment_context(comment)
+    hass.bus.async_fire(f"{DOMAIN}_comment_added", data, context=context)
+    _fire_comment_mentions(hass, entry_id, task, comment, comment.get("mentions", []))
+
+
+def _on_comment_updated(
+    hass: HomeAssistant, entry_id: str, task: dict, comment: dict, added_mentions: list[str]
+) -> None:
+    """An edit only notifies the persons it newly mentioned."""
+    _fire_comment_mentions(hass, entry_id, task, comment, added_mentions)
+
+
+def _fire_comment_mentions(
+    hass: HomeAssistant, entry_id: str, task: dict, comment: dict, persons: list[str]
+) -> None:
+    rendered = render_mentions(hass, comment["text"])[:255]
+    context = _comment_context(comment)
+    for person in persons:
+        if person == comment.get("by_person"):
+            continue
+        data = _build_event_data(hass, entry_id, task)
+        data["comment_id"] = comment["id"]
+        data["mentioned_person"] = person
+        for key in ("by", "by_person"):
+            if comment.get(key):
+                data[key] = comment[key]
+        data["text"] = rendered
+        hass.bus.async_fire(f"{DOMAIN}_comment_mention", data, context=context)
 
 
 def _parse_completed_at(task: dict) -> datetime:
@@ -2008,6 +2086,24 @@ def _async_register_services(hass: HomeAssistant) -> None:
         task = _resolve_task(store, call.data)
         await store.async_update_task(task["id"], actor=actor, **kwargs)
 
+    async def async_handle_add_comment(call: ServiceCall) -> None:
+        """Comment on a native task; the author is the calling user (if any)."""
+        _, store = _resolve_store(hass, call.data)
+        task = _resolve_task(store, call.data)
+        text = call.data["text"]
+        try:
+            check_mentions_exist(hass, text)
+            user_id = call.context.user_id
+            await store.async_add_comment(
+                task["id"],
+                text,
+                by=await _resolve_actor(hass, call),
+                by_user_id=user_id,
+                by_person=person_for_user(hass, user_id),
+            )
+        except ValueError as err:
+            raise ServiceValidationError(str(err)) from err
+
     async def async_handle_move_task(call: ServiceCall) -> None:
         """Move a task to another list — parity with the card's Move button.
 
@@ -2056,6 +2152,7 @@ def _async_register_services(hass: HomeAssistant) -> None:
                 src_entity_id=src_entity,
                 tgt_list_id=tgt_list_id,
                 tgt_entity_id=tgt_entity,
+                actor=await _resolve_actor(hass, call),
             )
         except ValueError as err:
             raise ServiceValidationError(str(err)) from err
@@ -2234,6 +2331,16 @@ def _async_register_services(hass: HomeAssistant) -> None:
         }),
     )
     hass.services.async_register(
+        DOMAIN, "add_comment", async_handle_add_comment,
+        schema=vol.Schema({
+            vol.Optional("entry_id"): cv.string,
+            vol.Optional("list_name"): cv.string,
+            vol.Optional("task_id"): cv.string,
+            vol.Optional("task_title"): cv.string,
+            vol.Required("text"): cv.string,
+        }),
+    )
+    hass.services.async_register(
         DOMAIN, "move_task", async_handle_move_task,
         schema=vol.Schema({
             vol.Optional("entry_id"): cv.string,
@@ -2315,6 +2422,10 @@ async def _async_setup_native_entry(hass: HomeAssistant, entry: ConfigEntry) -> 
     store.on_task_reopened = lambda task: _on_task_reopened(hass, entry.entry_id, task)
     store.on_reminders_changed = lambda task: _schedule_reminders(hass, entry.entry_id, task)
     store.on_task_schedule_changed = lambda task: _on_task_schedule_changed(hass, entry.entry_id, task)
+    store.on_comment_added = lambda task, comment: _on_comment_added(hass, entry.entry_id, task, comment)
+    store.on_comment_updated = lambda task, comment, added: _on_comment_updated(
+        hass, entry.entry_id, task, comment, added
+    )
 
     # Recover any pending timers from before restart
     _recover_recurrence_timers(hass, entry.entry_id, store)

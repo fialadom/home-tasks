@@ -15,7 +15,10 @@ from homeassistant.core import HomeAssistant
 from homeassistant.helpers.storage import Store
 
 from .const import (
+    MAX_COMMENT_LENGTH,
+    MAX_COMMENTS_PER_TASK,
     MAX_IMAGE_URL_LENGTH,
+    MAX_MENTIONS_PER_COMMENT,
     MAX_NOTES_LENGTH,
     MAX_RECURRENCE_VALUE,
     MAX_REMINDER_OFFSET_MINUTES,
@@ -42,7 +45,23 @@ _TIME_PATTERN = re.compile(r"^\d{2}:\d{2}$")
 _MMDD_PATTERN = re.compile(r"^\d{2}-\d{2}$")
 
 _MAX_HISTORY = 50  # max history entries per task
-_HISTORY_FIELDS = ("title", "due_date", "due_time", "priority", "assigned_person", "tags", "notes", "recurrence_enabled")
+_HISTORY_FIELDS = ("title", "due_date", "due_time", "priority", "assigned_person", "tags", "notes", "recurrence_enabled", "section_id")
+
+# A mention token in comment text: <@person.anna>
+MENTION_PATTERN = re.compile(r"<@(person\.[a-z0-9_]+)>")
+
+
+class TooManyMentionsError(ValueError):
+    """A comment names more different persons than MAX_MENTIONS_PER_COMMENT."""
+
+
+class UnknownPersonError(ValueError):
+    """A comment mentions a person.* entity that does not exist."""
+
+
+def extract_mentions(text: str) -> list[str]:
+    """Person entity ids mentioned in *text*: unique, in order of first appearance."""
+    return list(dict.fromkeys(MENTION_PATTERN.findall(text or "")))
 
 # Fields that determine WHEN a completed recurring task reopens.  Editing any
 # of them on a task that is (and stays) completed invalidates the persisted
@@ -392,6 +411,10 @@ class HomeTasksStore:
         # completed are edited — the persisted reopen_at and any armed reopen
         # timer describe the pre-edit configuration and must be recomputed.
         self.on_task_schedule_changed: Callable[[dict], None] | None = None
+        # on_comment_added(task, comment); on_comment_updated(task, comment,
+        # added_mentions) lists only the persons the edit newly mentioned.
+        self.on_comment_added: Callable[[dict, dict], None] | None = None
+        self.on_comment_updated: Callable[[dict, dict, list[str]], None] | None = None
 
     def async_add_listener(self, callback: Callable[[], None]) -> Callable[[], None]:
         """Add a listener for data changes. Returns a removal callable."""
@@ -469,6 +492,7 @@ class HomeTasksStore:
             task.setdefault("assigned_person", None)
             task.setdefault("tags", [])
             task.setdefault("history", [])
+            task.setdefault("comments", [])
             task.setdefault("image_url", None)
 
     async def _async_save(self) -> None:
@@ -725,6 +749,7 @@ class HomeTasksStore:
             "tags": tags,
             "image_url": None,
             "history": history,
+            "comments": [],
             "external_id": None,
             "sync_source": None,
             "section_id": section_id,
@@ -813,6 +838,7 @@ class HomeTasksStore:
             "tags": list(task.get("tags", [])),
             "notes": task.get("notes", ""),
             "recurrence_enabled": task.get("recurrence_enabled", False),
+            "section_id": task.get("section_id"),
         }
 
     def _apply_field_updates(self, task: dict, kwargs: dict) -> None:
@@ -861,6 +887,7 @@ class HomeTasksStore:
         "tags": "from_to",
         "notes": "marker",
         "recurrence_enabled": "to_only",
+        "section_id": "from_to",
     }
 
     @classmethod
@@ -1034,6 +1061,7 @@ class HomeTasksStore:
             "reopen_at": None,
             "sort_order": 0,  # set by the renumber below
             "history": [history_entry],
+            "comments": [],
             "external_id": None,
             "sync_source": None,
             "recurrence_remaining_count": source.get("recurrence_max_count"),
@@ -1059,7 +1087,16 @@ class HomeTasksStore:
 
     # --- Sub-task methods ---
 
-    async def async_add_sub_task(self, task_id: str, title: str) -> dict:
+    def _record_sub_task(self, task: dict, op: str, title: str, actor: str | None) -> None:
+        """Append a sub_task history entry (op: added/completed/reopened/deleted)."""
+        entry = {"ts": datetime.now(timezone.utc).isoformat(), "action": "sub_task", "op": op, "title": title}
+        if actor:
+            entry["by"] = actor
+        hist = task.setdefault("history", [])
+        hist.append(entry)
+        _trim_history(hist)
+
+    async def async_add_sub_task(self, task_id: str, title: str, actor: str | None = None) -> dict:
         """Add a sub-task to a task."""
         title = validate_text(title, MAX_TITLE_LENGTH, "Sub-task title")
         task = self.get_task(task_id)
@@ -1067,10 +1104,13 @@ class HomeTasksStore:
             raise ValueError(f"Maximum number of sub-tasks ({MAX_SUB_TASKS_PER_TASK}) reached")
         sub_task = {"id": str(uuid.uuid4()), "title": title, "completed": False}
         task["sub_items"].append(sub_task)
+        self._record_sub_task(task, "added", title, actor)
         await self._async_save()
         return sub_task
 
-    async def async_update_sub_task(self, task_id: str, sub_task_id: str, **kwargs) -> dict:
+    async def async_update_sub_task(
+        self, task_id: str, sub_task_id: str, actor: str | None = None, **kwargs
+    ) -> dict:
         """Update a sub-task."""
         task = self.get_task(task_id)
         for sub in task["sub_items"]:
@@ -1079,9 +1119,15 @@ class HomeTasksStore:
                     kwargs["title"] = validate_text(kwargs["title"], MAX_TITLE_LENGTH, "Sub-task title")
                 if "completed" in kwargs and not isinstance(kwargs["completed"], bool):
                     raise ValueError("completed must be a boolean")
+                was_completed = bool(sub.get("completed"))
                 for key, value in kwargs.items():
                     if key in ("title", "completed"):
                         sub[key] = value
+                # Only a real completed toggle is history; a rename is not.
+                if "completed" in kwargs and bool(sub["completed"]) != was_completed:
+                    self._record_sub_task(
+                        task, "completed" if sub["completed"] else "reopened", sub["title"], actor
+                    )
                 await self._async_save()
                 return sub
         raise ValueError("Sub-task not found")
@@ -1093,13 +1139,108 @@ class HomeTasksStore:
         task["sub_items"] = [id_to_sub[sid] for sid in sub_task_ids if sid in id_to_sub]
         await self._async_save()
 
-    async def async_delete_sub_task(self, task_id: str, sub_task_id: str) -> None:
+    async def async_delete_sub_task(self, task_id: str, sub_task_id: str, actor: str | None = None) -> None:
         """Delete a sub-task."""
         task = self.get_task(task_id)
-        original_len = len(task["sub_items"])
-        task["sub_items"] = [s for s in task["sub_items"] if s["id"] != sub_task_id]
-        if len(task["sub_items"]) == original_len:
+        removed = next((s for s in task["sub_items"] if s["id"] == sub_task_id), None)
+        if removed is None:
             raise ValueError("Sub-task not found")
+        task["sub_items"] = [s for s in task["sub_items"] if s["id"] != sub_task_id]
+        self._record_sub_task(task, "deleted", removed.get("title", ""), actor)
+        await self._async_save()
+
+    # --- Comments ---
+
+    @staticmethod
+    def _validate_comment_text(text: str) -> tuple[str, list[str]]:
+        """Trim and validate comment text; return it with its mentions."""
+        text = validate_text(text, MAX_COMMENT_LENGTH, "Comment")
+        mentions = extract_mentions(text)
+        if len(mentions) > MAX_MENTIONS_PER_COMMENT:
+            raise TooManyMentionsError(
+                f"A comment can mention at most {MAX_MENTIONS_PER_COMMENT} people"
+            )
+        return text, mentions
+
+    def _get_comment(self, task: dict, comment_id: str) -> dict:
+        for comment in task.setdefault("comments", []):
+            if comment["id"] == comment_id:
+                return comment
+        raise ValueError("Comment not found")
+
+    @staticmethod
+    def _check_comment_permission(comment: dict, user_id: str | None, is_admin: bool) -> None:
+        """Only the author (by user id) or an admin may change a comment."""
+        if is_admin:
+            return
+        if user_id and comment.get("by_user_id") == user_id:
+            return
+        raise PermissionError("Only the author or an admin can change this comment")
+
+    async def async_add_comment(
+        self,
+        task_id: str,
+        text: str,
+        *,
+        by: str | None = None,
+        by_user_id: str | None = None,
+        by_person: str | None = None,
+    ) -> dict:
+        """Append a comment to a task and record it in the history."""
+        text, mentions = self._validate_comment_text(text)
+        task = self.get_task(task_id)
+        comments = task.setdefault("comments", [])
+        if len(comments) >= MAX_COMMENTS_PER_TASK:
+            raise ValueError(f"Maximum number of comments ({MAX_COMMENTS_PER_TASK}) reached")
+        now = datetime.now(timezone.utc).isoformat()
+        comment = {
+            "id": str(uuid.uuid4()),
+            "ts": now,
+            "by": by,
+            "by_user_id": by_user_id,
+            "by_person": by_person,
+            "text": text,
+            "mentions": mentions,
+        }
+        comments.append(comment)
+        entry: dict = {"ts": now, "action": "commented", "comment_id": comment["id"]}
+        if by:
+            entry["by"] = by
+        if mentions:
+            entry["mentions"] = list(mentions)
+        hist = task.setdefault("history", [])
+        hist.append(entry)
+        _trim_history(hist)
+        await self._async_save()
+        if self.on_comment_added:
+            self.on_comment_added(task, comment)
+        return comment
+
+    async def async_update_comment(
+        self, task_id: str, comment_id: str, text: str, *, user_id: str | None, is_admin: bool
+    ) -> dict:
+        """Edit a comment (author or admin only); re-derives its mentions."""
+        task = self.get_task(task_id)
+        comment = self._get_comment(task, comment_id)
+        self._check_comment_permission(comment, user_id, is_admin)
+        text, mentions = self._validate_comment_text(text)
+        added = [m for m in mentions if m not in comment.get("mentions", [])]
+        comment["text"] = text
+        comment["mentions"] = mentions
+        comment["edited_ts"] = datetime.now(timezone.utc).isoformat()
+        await self._async_save()
+        if self.on_comment_updated:
+            self.on_comment_updated(task, comment, added)
+        return comment
+
+    async def async_delete_comment(
+        self, task_id: str, comment_id: str, *, user_id: str | None, is_admin: bool
+    ) -> None:
+        """Delete a comment (author or admin only)."""
+        task = self.get_task(task_id)
+        comment = self._get_comment(task, comment_id)
+        self._check_comment_permission(comment, user_id, is_admin)
+        task["comments"] = [c for c in task["comments"] if c["id"] != comment_id]
         await self._async_save()
 
     # --- Sections ---

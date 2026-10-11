@@ -3,6 +3,7 @@
 import asyncio
 import logging
 import time
+from datetime import datetime, timezone
 
 import voluptuous as vol
 
@@ -13,7 +14,7 @@ from .image_library import async_get_image_library
 from .image_queue import PLACEHOLDER_IMAGE_URLS, async_get_image_queue
 from .const import DOMAIN, MAX_IMAGE_URL_LENGTH, MAX_SECTIONS_PER_LIST, MAX_REORDER_IDS, MAX_RECURRENCE_VALUE, MAX_REMINDER_OFFSET_MINUTES, MAX_REMINDERS_PER_TASK, MAX_SUB_TASKS_PER_TASK, MAX_TAG_CATALOG, MAX_TAGS_PER_TASK, MAX_TITLE_LENGTH, RECURRENCE_FIELDS, VALID_RECURRENCE_ANCHORS, VALID_RECURRENCE_UNITS
 from .overlay_store import ExternalTaskOverlayStore, OVERLAY_FIELDS, _empty_overlay
-from .store import validate_assigned_person
+from .store import TooManyMentionsError, UnknownPersonError, _trim_history, validate_assigned_person
 from .provider_adapters import ProviderAdapter, GenericAdapter, _get_external_todo_items
 
 _LOGGER = logging.getLogger(__name__)
@@ -56,6 +57,9 @@ def async_register_websocket_commands(hass: HomeAssistant) -> None:
     websocket_api.async_register_command(hass, ws_update_sub_task)
     websocket_api.async_register_command(hass, ws_delete_sub_task)
     websocket_api.async_register_command(hass, ws_reorder_sub_tasks)
+    websocket_api.async_register_command(hass, ws_add_comment)
+    websocket_api.async_register_command(hass, ws_update_comment)
+    websocket_api.async_register_command(hass, ws_delete_comment)
     websocket_api.async_register_command(hass, ws_move_task)
     websocket_api.async_register_command(hass, ws_move_task_cross)
     websocket_api.async_register_command(hass, ws_set_list_settings)
@@ -122,7 +126,13 @@ def _get_store(hass, entry_id):
 
 def _handle_error(connection, msg_id, err):
     """Send error without leaking internals."""
-    if isinstance(err, ValueError):
+    if isinstance(err, UnknownPersonError):
+        connection.send_error(msg_id, "unknown_person", str(err))
+    elif isinstance(err, TooManyMentionsError):
+        connection.send_error(msg_id, "too_many_mentions", str(err))
+    elif isinstance(err, PermissionError):
+        connection.send_error(msg_id, "unauthorized", str(err))
+    elif isinstance(err, ValueError):
         connection.send_error(msg_id, "invalid_request", str(err))
     else:
         _LOGGER.exception("Unexpected error in home_tasks")
@@ -642,7 +652,9 @@ async def ws_add_sub_task(hass, connection, msg):
     """Add a sub-task."""
     try:
         store = _get_store(hass, msg["list_id"])
-        sub = await store.async_add_sub_task(msg["task_id"], msg["title"])
+        sub = await store.async_add_sub_task(
+            msg["task_id"], msg["title"], actor=connection.user.name if connection.user else None
+        )
         connection.send_result(msg["id"], sub)
     except Exception as err:
         _handle_error(connection, msg["id"], err)
@@ -667,7 +679,10 @@ async def ws_update_sub_task(hass, connection, msg):
         for key in ("title", "completed"):
             if key in msg:
                 kwargs[key] = msg[key]
-        sub = await store.async_update_sub_task(msg["task_id"], msg["sub_task_id"], **kwargs)
+        sub = await store.async_update_sub_task(
+            msg["task_id"], msg["sub_task_id"],
+            actor=connection.user.name if connection.user else None, **kwargs,
+        )
         connection.send_result(msg["id"], sub)
     except Exception as err:
         _handle_error(connection, msg["id"], err)
@@ -686,7 +701,10 @@ async def ws_delete_sub_task(hass, connection, msg):
     """Delete a sub-task."""
     try:
         store = _get_store(hass, msg["list_id"])
-        await store.async_delete_sub_task(msg["task_id"], msg["sub_task_id"])
+        await store.async_delete_sub_task(
+            msg["task_id"], msg["sub_task_id"],
+            actor=connection.user.name if connection.user else None,
+        )
         connection.send_result(msg["id"])
     except Exception as err:
         _handle_error(connection, msg["id"], err)
@@ -711,6 +729,92 @@ async def ws_reorder_sub_tasks(hass, connection, msg):
         _handle_error(connection, msg["id"], err)
 
 
+# --- Comment commands (native lists only) ---
+
+@websocket_api.websocket_command(
+    {
+        vol.Required("type"): "home_tasks/add_comment",
+        vol.Required("list_id"): _val_id,
+        vol.Required("task_id"): _val_id,
+        vol.Required("text"): str,
+    }
+)
+@websocket_api.async_response
+async def ws_add_comment(hass, connection, msg):
+    """Add a comment to a task."""
+    from . import check_mentions_exist, person_for_user
+
+    try:
+        store = _get_store(hass, msg["list_id"])
+        user = connection.user
+        check_mentions_exist(hass, msg["text"])
+        comment = await store.async_add_comment(
+            msg["task_id"],
+            msg["text"],
+            by=user.name if user else None,
+            by_user_id=user.id if user else None,
+            by_person=person_for_user(hass, user.id) if user else None,
+        )
+        connection.send_result(msg["id"], comment)
+    except Exception as err:
+        _handle_error(connection, msg["id"], err)
+
+
+@websocket_api.websocket_command(
+    {
+        vol.Required("type"): "home_tasks/update_comment",
+        vol.Required("list_id"): _val_id,
+        vol.Required("task_id"): _val_id,
+        vol.Required("comment_id"): _val_id,
+        vol.Required("text"): str,
+    }
+)
+@websocket_api.async_response
+async def ws_update_comment(hass, connection, msg):
+    """Edit a comment (author or admin)."""
+    from . import check_mentions_exist
+
+    try:
+        store = _get_store(hass, msg["list_id"])
+        user = connection.user
+        check_mentions_exist(hass, msg["text"])
+        comment = await store.async_update_comment(
+            msg["task_id"],
+            msg["comment_id"],
+            msg["text"],
+            user_id=user.id if user else None,
+            is_admin=bool(user and user.is_admin),
+        )
+        connection.send_result(msg["id"], comment)
+    except Exception as err:
+        _handle_error(connection, msg["id"], err)
+
+
+@websocket_api.websocket_command(
+    {
+        vol.Required("type"): "home_tasks/delete_comment",
+        vol.Required("list_id"): _val_id,
+        vol.Required("task_id"): _val_id,
+        vol.Required("comment_id"): _val_id,
+    }
+)
+@websocket_api.async_response
+async def ws_delete_comment(hass, connection, msg):
+    """Delete a comment (author or admin)."""
+    try:
+        store = _get_store(hass, msg["list_id"])
+        user = connection.user
+        await store.async_delete_comment(
+            msg["task_id"],
+            msg["comment_id"],
+            user_id=user.id if user else None,
+            is_admin=bool(user and user.is_admin),
+        )
+        connection.send_result(msg["id"], {})
+    except Exception as err:
+        _handle_error(connection, msg["id"], err)
+
+
 # --- Cross-list move ---
 
 
@@ -731,6 +835,7 @@ async def ws_move_task(hass, connection, msg):
             task_id=msg["task_id"],
             src_list_id=msg["source_list_id"],
             tgt_list_id=msg["target_list_id"],
+            actor=connection.user.name if connection.user else None,
         )
         connection.send_result(msg["id"])
     except Exception as err:
@@ -744,6 +849,7 @@ async def async_move_task_any(
     src_entity_id: str | None = None,
     tgt_list_id: str | None = None,
     tgt_entity_id: str | None = None,
+    actor: str | None = None,
 ) -> None:
     """Move a task between any combination of native and external lists.
 
@@ -768,8 +874,20 @@ async def async_move_task_any(
         src_store = _get_store(hass, src_list_id)
         tgt_store = _get_store(hass, tgt_list_id)
         task_data = await src_store.async_export_task(task_id)
+        # The target copy carries the "moved" history entry; task_data stays
+        # untouched so a failed import restores the task exactly as it was.
+        src_entry = hass.config_entries.async_get_entry(src_list_id)
+        moved_entry = {
+            "ts": datetime.now(timezone.utc).isoformat(),
+            "action": "moved",
+            "from_list": src_entry.data.get("name", src_entry.title) if src_entry else src_list_id,
+        }
+        if actor:
+            moved_entry["by"] = actor
+        moved_hist = [*task_data.get("history", []), moved_entry]
+        _trim_history(moved_hist)
         try:
-            await tgt_store.async_import_task(task_data)
+            await tgt_store.async_import_task({**task_data, "history": moved_hist})
         except ValueError:
             # Never lose the task when the target rejects it (e.g. list
             # full): put it back where it was — same section, same sort
@@ -1035,6 +1153,7 @@ async def ws_move_task_cross(hass, connection, msg):
             src_entity_id=msg.get("source_entity_id"),
             tgt_list_id=msg.get("target_list_id"),
             tgt_entity_id=msg.get("target_entity_id"),
+            actor=connection.user.name if connection.user else None,
         )
         connection.send_result(msg["id"])
     except Exception as err:

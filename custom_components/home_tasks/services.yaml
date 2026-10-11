@@ -250,6 +250,45 @@ update_task:
       selector:
         text:
 
+add_comment:
+  name: Add Comment
+  description: >-
+    Add a comment to a task on a native list (found by ID or title). Write
+    <@person.anna> to mention a person; the comment is authored by the user
+    who called the service.
+  fields:
+    list_name:
+      name: List Name
+      description: The name of the task list.
+      example: "Shopping List"
+      selector:
+        text:
+    entry_id:
+      name: Entry ID
+      description: The config entry ID of the list (alternative to list name).
+      selector:
+        text:
+    task_id:
+      name: Task ID
+      description: The ID of the task to comment on.
+      selector:
+        text:
+    task_title:
+      name: Task Title
+      description: Title of the task (alternative to task ID).
+      selector:
+        text:
+    text:
+      name: Text
+      description: >-
+        The comment (up to 2000 characters). Mention people with
+        <@person.entity>, e.g. "<@person.anna> please check".
+      required: true
+      example: "<@person.anna> please check this"
+      selector:
+        text:
+          multiline: true
+
 move_task:
   name: Move Task
   description: >-

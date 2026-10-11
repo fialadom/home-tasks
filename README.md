@@ -35,7 +35,8 @@ Every task can carry over 20 individual attributes:
 - **Recurrence end date**
 - **Maximum repetitions**
 - **Completion state** with timestamp
-- **Task history / audit log** — every field change recorded with actor and timestamp
+- **Task history / audit log** — every field change recorded with actor and timestamp, now also section changes, sub-task changes (added / completed / reopened / deleted), comments and moves between lists
+- **Comments with @mentions** — a comment thread per task on native lists. Mention people with `@` (stored as `<@person.anna>`); authors and admins can edit or delete their comments, and automations can react to comments and mentions (see [Events](#events))
 
 ### External Todo Lists
 
@@ -363,7 +364,9 @@ Each entry in `columns` accepts the following options.
 | `show_due_date` | `true` | Show/hide due date and time |
 | `show_reminders` | `true` | Show/hide reminders |
 | `show_recurrence` | `true` | Show/hide recurrence settings |
-| `show_history` | `false` | Show/hide the task change history |
+| `show_history` | `false` | Show/hide the task change history. Defaults to `true` for `view_mode: board` columns |
+| `show_comments` | `true` | Show/hide the comments section in the task details (native lists only) |
+| `badge_comments` | `true` | Show/hide the `💬 N` comment-count chip on task rows (native lists only). It turns into `@ 💬 N`, highlighted, when a comment mentions you |
 | `badge_priority` / `badge_progress` / `badge_due` / `badge_recurrence` / `badge_tags` / `badge_reminders` | `true` | Show/hide the corresponding chip on task rows without disabling the feature itself — e.g. keep reminders active but hide their chip (`badge_reminders: false`). The matching `show_*` switch still controls the feature (detail editor + chip) |
 | `show_move` | `true` | Show/hide the Move button in the task details (moves a task to another list, next to Duplicate / Delete) |
 
@@ -617,11 +620,18 @@ grid_options:
 | `home_tasks_task_assigned` | Fired when a person is assigned to a task — including tasks *created* with an assignee (explicitly, via the list default, or by duplicating for another person); `previous_person` is `null` in that case |
 | `home_tasks_task_reopened` | Fired when a task is reopened (manually or by recurrence) |
 | `home_tasks_task_reminder` | Fired at the configured offset before a task's due time |
+| `home_tasks_comment_added` | Fired when a comment is added to a task (native lists) |
+| `home_tasks_comment_mention` | Fired once per mentioned person when a comment is added, or when an edit newly mentions someone. Never fired for the author's own person |
 
 All events include: `entry_id`, `task_id`, `task_title`, `list_name`, and (if set) `assigned_person`, `due_date`, `due_time`, `priority`, `notes` (truncated to 255 chars), `tags`.
 Events for external lists additionally include `entity_id` (the external todo entity).
 The `home_tasks_task_reminder` event additionally includes `reminder_offset_minutes`.
 The `home_tasks_task_completed` event additionally includes who ticked the task off, when a user did — from the card, the HA todo entity's actions (Companion App, `todo.update_item`) or a service called by a user: `completed_by` (the user's name, as in the task history), `completed_by_user_id`, and `completed_by_person` (the `person.*` linked to that user). The event runs in that user's context, so the logbook names them too. Completions by automations, by the recurrence, in a provider's own app or by an Assist voice command (Home Assistant's todo intents don't pass on who spoke) carry none of these fields.
+
+The comment events run in the author's user context (when known). Both carry `text` with mentions rendered as `@<friendly name>`, truncated to 255 chars:
+
+- `home_tasks_comment_added` additionally includes `comment_id`, `text`, and, when known, `by` (author name), `by_user_id`, `by_person` and `mentions` (the mentioned `person.*` entities).
+- `home_tasks_comment_mention` additionally includes `comment_id`, `mentioned_person`, `text`, and, when known, `by` and `by_person`.
 
 ### Services
 
@@ -728,6 +738,18 @@ Update any field of an existing task, found by `task_id` or `task_title`. Only t
 | `tags` | no | Comma-separated tags — replaces the existing tags |
 | `reminders` | no | Minute offsets before the due moment — replaces the existing reminders |
 
+#### `home_tasks.add_comment`
+
+Add a comment to a task on a native list, found by `task_id` or `task_title`. The author is the user who called the service (none for plain automations). Mention people with the token `<@person.entity_id>` inside `text`, e.g. `<@person.anna> please check this`; an unknown person is rejected and at most 10 different persons fit in one comment.
+
+| Field | Required | Description |
+|-------|----------|-------------|
+| `list_name` | * | Name of the list |
+| `entry_id` | * | Config entry ID |
+| `task_title` | ** | Title of the task |
+| `task_id` | ** | UUID of the task |
+| `text` | yes | Comment text, 1–2000 characters, may contain `<@person.x>` tokens |
+
 #### `home_tasks.move_task`
 
 Move a task to another list — same as the card's Move button. Provide exactly one target.
@@ -813,6 +835,34 @@ automation:
 
 Reset the counters weekly, feed them into a statistics card, or skip the
 counters and chart the events straight from the logbook.
+
+Tell people when they are mentioned in a comment — pick the phone by `mentioned_person` (the `url` is only an example, point it at your own dashboard):
+
+```yaml
+automation:
+  - alias: "Home Tasks: notify on @mention"
+    trigger:
+      - platform: event
+        event_type: home_tasks_comment_mention
+    action:
+      - choose:
+          - conditions: "{{ trigger.event.data.mentioned_person == 'person.dominik' }}"
+            sequence:
+              - service: notify.mobile_app_dominik_phone
+                data:
+                  title: "{{ trigger.event.data.by }} tě zmínil v úkolu {{ trigger.event.data.task_title }}"
+                  message: "{{ trigger.event.data.text }}"
+                  data:
+                    url: /ukoly-porovnani/ukoly
+          - conditions: "{{ trigger.event.data.mentioned_person == 'person.anna' }}"
+            sequence:
+              - service: notify.mobile_app_anna_phone
+                data:
+                  title: "{{ trigger.event.data.by }} tě zmínil v úkolu {{ trigger.event.data.task_title }}"
+                  message: "{{ trigger.event.data.text }}"
+                  data:
+                    url: /ukoly-porovnani/ukoly
+```
 
 Send a notification when a reminder fires:
 
