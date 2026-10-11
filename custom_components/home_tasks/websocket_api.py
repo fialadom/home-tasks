@@ -11,7 +11,7 @@ from homeassistant.core import Context, HomeAssistant, callback
 
 from .image_library import async_get_image_library
 from .image_queue import PLACEHOLDER_IMAGE_URLS, async_get_image_queue
-from .const import DOMAIN, MAX_IMAGE_URL_LENGTH, MAX_REORDER_IDS, MAX_RECURRENCE_VALUE, MAX_REMINDER_OFFSET_MINUTES, MAX_REMINDERS_PER_TASK, MAX_SUB_TASKS_PER_TASK, MAX_TAG_CATALOG, MAX_TAGS_PER_TASK, MAX_TITLE_LENGTH, RECURRENCE_FIELDS, VALID_RECURRENCE_ANCHORS, VALID_RECURRENCE_UNITS
+from .const import DOMAIN, MAX_IMAGE_URL_LENGTH, MAX_SECTIONS_PER_LIST, MAX_REORDER_IDS, MAX_RECURRENCE_VALUE, MAX_REMINDER_OFFSET_MINUTES, MAX_REMINDERS_PER_TASK, MAX_SUB_TASKS_PER_TASK, MAX_TAG_CATALOG, MAX_TAGS_PER_TASK, MAX_TITLE_LENGTH, RECURRENCE_FIELDS, VALID_RECURRENCE_ANCHORS, VALID_RECURRENCE_UNITS
 from .overlay_store import ExternalTaskOverlayStore, OVERLAY_FIELDS, _empty_overlay
 from .store import validate_assigned_person
 from .provider_adapters import ProviderAdapter, GenericAdapter, _get_external_todo_items
@@ -23,6 +23,8 @@ _val_id = vol.All(str, vol.Length(min=1, max=40))
 _val_entity_id = vol.All(str, vol.Length(min=1, max=255))
 _val_task_uid = vol.All(str, vol.Length(min=1, max=255))
 _val_date = vol.Any(vol.All(str, vol.Match(r"^\d{4}-\d{2}-\d{2}$")), None)
+_val_icon = vol.Any(vol.All(str, vol.Length(min=1, max=64)), None)
+_val_section_name = vol.All(str, vol.Length(min=1, max=100))
 _val_reminders = vol.All(
     list,
     vol.Length(max=MAX_REMINDERS_PER_TASK),
@@ -43,6 +45,7 @@ def async_register_websocket_commands(hass: HomeAssistant) -> None:
     """Register WebSocket commands."""
     # Native list commands
     websocket_api.async_register_command(hass, ws_get_lists)
+    websocket_api.async_register_command(hass, ws_create_list)
     websocket_api.async_register_command(hass, ws_get_tasks)
     websocket_api.async_register_command(hass, ws_add_task)
     websocket_api.async_register_command(hass, ws_update_task)
@@ -129,40 +132,105 @@ def _handle_error(connection, msg_id, err):
 # --- List overview (returns config entries as lists) ---
 
 
+def _list_info(hass, entry, entity_reg) -> dict:
+    """Describe one native list (config entry) the way get_lists reports it."""
+    from .store import HomeTasksStore
+
+    store = hass.data.get(DOMAIN, {}).get(entry.entry_id)
+    # Resolve the sensor entity ID so the frontend can subscribe to
+    # state-changed events for real-time cross-device updates.
+    sensor_unique_id = f"{entry.entry_id}_open_tasks"
+    sensor_entity_id = entity_reg.async_get_entity_id("sensor", DOMAIN, sensor_unique_id)
+    is_native_store = bool(store) and isinstance(store, HomeTasksStore)
+    return {
+        "id": entry.entry_id,
+        "name": entry.data.get("name", entry.title),
+        "task_count": len(store.tasks) if is_native_store else 0,
+        "sensor_entity_id": sensor_entity_id,
+        **(
+            store.get_settings()
+            if is_native_store
+            else {"share_images": True, "auto_generate_images": False}
+        ),
+    }
+
+
 @websocket_api.websocket_command({vol.Required("type"): "home_tasks/get_lists"})
 @websocket_api.async_response
 async def ws_get_lists(hass, connection, msg):
     """Get all lists (native config entries only)."""
     try:
-        from .store import HomeTasksStore
         from homeassistant.helpers import entity_registry as er
 
-        stores = hass.data.get(DOMAIN, {})
         entries = hass.config_entries.async_entries(DOMAIN)
         entity_reg = er.async_get(hass)
-        lists = []
-        for entry in entries:
-            if entry.data.get("type") == "external":
-                continue  # external lists handled by ws_get_external_lists
-            store = stores.get(entry.entry_id)
-            # Resolve the sensor entity ID so the frontend can subscribe to
-            # state-changed events for real-time cross-device updates.
-            sensor_unique_id = f"{entry.entry_id}_open_tasks"
-            sensor_entity_id = entity_reg.async_get_entity_id("sensor", DOMAIN, sensor_unique_id)
-            lists.append({
-                "id": entry.entry_id,
-                "name": entry.data.get("name", entry.title),
-                "task_count": len(store.tasks) if store and isinstance(store, HomeTasksStore) else 0,
-                "sensor_entity_id": sensor_entity_id,
-                **(
-                    store.get_settings()
-                    if store and isinstance(store, HomeTasksStore)
-                    else {"share_images": True, "auto_generate_images": False}
-                ),
-            })
+        lists = [
+            _list_info(hass, entry, entity_reg)
+            for entry in entries
+            if entry.data.get("type") != "external"  # handled by ws_get_external_lists
+        ]
         connection.send_result(msg["id"], {"lists": lists})
     except Exception as err:
         _handle_error(connection, msg["id"], err)
+
+
+@websocket_api.websocket_command(
+    {
+        vol.Required("type"): "home_tasks/create_list",
+        vol.Required("name"): str,
+        vol.Optional("sections", default=[]): vol.All(
+            [{vol.Required("name"): _val_section_name, vol.Optional("icon"): _val_icon}],
+            vol.Length(max=MAX_SECTIONS_PER_LIST),
+        ),
+    }
+)
+@websocket_api.require_admin
+@websocket_api.async_response
+async def ws_create_list(hass, connection, msg):
+    """Create a native list (like Settings > Add service) plus its sections.
+
+    Goes through the config flow so name validation, the duplicate check and
+    the MAX_LISTS limit live in one place and the entry is a normal
+    ``source = user`` one.
+    """
+    from homeassistant.config_entries import SOURCE_USER
+    from homeassistant.data_entry_flow import FlowResultType
+    from homeassistant.helpers import entity_registry as er
+
+    msg_id = msg["id"]
+    flows = hass.config_entries.flow
+    flow_id = None
+    try:
+        result = await flows.async_init(DOMAIN, context={"source": SOURCE_USER})
+        if result["type"] is FlowResultType.ABORT:
+            reason = result.get("reason", "unknown")
+            connection.send_error(msg_id, reason, f"Cannot create a list: {reason}")
+            return
+        flow_id = result["flow_id"]
+        result = await flows.async_configure(flow_id, {"next_step_id": "native"})
+        result = await flows.async_configure(flow_id, {"name": msg["name"]})
+        if result["type"] is FlowResultType.FORM:
+            # Validation error: drop the flow so none lingers in progress.
+            flows.async_abort(flow_id)
+            code = (result.get("errors") or {}).get("name", "invalid_request")
+            connection.send_error(msg_id, code, f"Invalid list name: {code}")
+            return
+        if result["type"] is not FlowResultType.CREATE_ENTRY:
+            raise ValueError("Could not create the list")
+        entry = result["result"]
+
+        # The entry is set up before async_configure returns.
+        store = hass.data.get(DOMAIN, {}).get(entry.entry_id)
+        if store is None:
+            raise ValueError("The new list was created but its store is not ready")
+        for section in msg["sections"]:
+            await store.async_add_section(section["name"], icon=section.get("icon"))
+
+        connection.send_result(
+            msg_id, {"list": _list_info(hass, entry, er.async_get(hass))}
+        )
+    except Exception as err:
+        _handle_error(connection, msg_id, err)
 
 
 # --- Task commands (list_id = entry_id) ---
@@ -1932,10 +2000,6 @@ async def ws_delete_external_overlay(hass, connection, msg):
 
 
 # --- Sections (work for both native lists via list_id and external lists via entity_id) ---
-
-
-_val_icon = vol.Any(vol.All(str, vol.Length(min=1, max=64)), None)
-_val_section_name = vol.All(str, vol.Length(min=1, max=100))
 
 
 _SECTION_TARGET = _TARGET

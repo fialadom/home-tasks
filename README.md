@@ -164,6 +164,8 @@ columns:
   - { list_id: "homelab-list-id",   title: Homelab,   view_mode: board }
 ```
 
+**New board from the tab bar.** Administrators see a **+** after the last tab. It opens a small form for the name of the new board and which board to copy the sections from (or none). **Create** makes a new Home Tasks list with that name and those sections, adds a tab for it to this card (a copy of the chosen board's column settings, or a plain board column) and saves the dashboard, then switches to the new tab. This works only on storage-mode dashboards (not YAML) and needs 2+ columns; hide the button with `tab_add: false`.
+
 #### Voice Input
 
 A mic button on the add-task row lets you dictate a task title instead of typing it. It uses Home Assistant's **Assist speech-to-text** when available and falls back to the browser's built-in speech recognition. Hide the button per column with `show_voice: false`.
@@ -373,6 +375,7 @@ These options live at the **root** of the card config, not inside a column.
 | `title` | — | Optional card title shown above the columns |
 | `layout` | `columns` | `columns` shows the columns side by side; `tabs` shows one tab per column and only the active column (see [Tabs](#tabs)) |
 | `tab_counts` | `true` | (Tabs layout) Show the number of open tasks next to each tab label |
+| `tab_add` | `true` | (Tabs layout) Show the **+** button after the last tab to create a new board. Administrators only, storage-mode dashboards only, needs 2+ columns |
 | `image_generation.entity_id` | — | An `ai_task.*` entity used to generate task images |
 | `image_generation.prompt_prefix` | — | Text prepended to every AI image prompt (e.g. `Minimalist icon of`) |
 | `grid_options` | — | Standard HA grid sizing (e.g. `columns: 36`, `rows: auto`) |
