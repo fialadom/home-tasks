@@ -159,6 +159,8 @@ const _TRANSLATIONS = {
     history: "History", history_created: "Created", history_completed: "Completed", history_reopened: "Reopened",
     history_reset: "Auto-reset (recurrence)", history_changed: "changed", history_empty: "No history yet", hist_title: "Title", history_disabled: "Disabled",
     ed_show_history: "Histories", hist_by_user: "User",
+    comments: "Comments", comment_placeholder: "Write a comment… (@ to mention)", comment_send: "Send", comment_edit: "Edit", comment_save: "Save", comment_edited: "edited", comment_by_automation: "Automation", comment_err_person: "The mentioned person does not exist.", comment_err_mentions: "A comment can mention at most 10 people.", comment_err_failed: "The comment could not be saved.", confirm_delete_comment: "Delete this comment?",
+    ed_show_comments: "Comments", ed_badge_comments: "Comment count", history_commented: "Comment", history_mentioned: "mentioned", hist_section: "Column", hist_section_deleted: "(deleted section)", history_sub_added: "Sub-task added", history_sub_completed: "Sub-task completed", history_sub_reopened: "Sub-task reopened", history_sub_deleted: "Sub-task deleted", history_moved: "Moved from list {0}",
     ed_show_images: "Images",
     ed_view_mode: "View mode", ed_view_mode_list: "List", ed_view_mode_tiles: "Tiles", ed_view_mode_board: "Board", board_open: "Open", board_no_section: "No section", board_add_card: "Add a task", board_more_done: "+{0} more", ed_board_done_column: "Done column", ed_board_add_per_lane: "Add button in each column", ed_board_help: "Board: sections become columns. Drag a task to another column to change its section, into Done to complete it.",
     ed_layout: "Layout", ed_layout_columns: "Columns side by side", ed_layout_tabs: "Tabs", ed_tab_counts: "Task count in tabs", new_board: "New board", new_board_name: "Name of the new board", new_board_sections_from: "Copy sections from", new_board_sections_none: "None", new_board_create: "Create", new_board_err_empty: "Enter a name for the board.", new_board_err_duplicate: "A list with this name already exists.", new_board_err_max: "The maximum number of lists has been reached.", new_board_err_failed: "Could not create the board.", new_board_err_card: "This card was not found in the dashboard configuration. Add the board in the card editor.", new_board_err_save: "The list was created but could not be added to this card. Add it in the card editor.", ed_tab_add: "+ button for a new board",
@@ -289,6 +291,8 @@ const _TRANSLATIONS = {
     history: "Geschiedenis", history_created: "Aangemaakt", history_completed: "Voltooid", history_reopened: "Heropend",
     history_reset: "Automatisch teruggezet", history_changed: "gewijzigd", history_empty: "Geen geschiedenis", hist_title: "Titel", history_disabled: "Uitgeschakeld",
     ed_show_history: "Geschiedenissen", hist_by_user: "Gebruiker",
+    comments: "Opmerkingen", comment_placeholder: "Schrijf een opmerking… (@ om iemand te noemen)", comment_send: "Verzenden", comment_edit: "Bewerken", comment_save: "Opslaan", comment_edited: "bewerkt", comment_by_automation: "Automatisering", comment_err_person: "De genoemde persoon bestaat niet.", comment_err_mentions: "Een opmerking kan maximaal 10 personen noemen.", comment_err_failed: "De opmerking kon niet worden opgeslagen.", confirm_delete_comment: "Deze opmerking verwijderen?",
+    ed_show_comments: "Opmerkingen", ed_badge_comments: "Aantal opmerkingen", history_commented: "Opmerking", history_mentioned: "noemde", hist_section: "Kolom", hist_section_deleted: "(verwijderde sectie)", history_sub_added: "Subtaak toegevoegd", history_sub_completed: "Subtaak voltooid", history_sub_reopened: "Subtaak heropend", history_sub_deleted: "Subtaak verwijderd", history_moved: "Verplaatst van lijst {0}",
     ed_show_add_task: "Taak toevoegen",
     assigned_unknown: "Onbekend (%s)", recurrence_readonly: "Beheerd door %s", synced_with: "Gesynchroniseerd met %s",
     due_today: "Vandaag", due_tomorrow: "Morgen", due_yesterday: "Gisteren",
@@ -394,6 +398,8 @@ const _TRANSLATIONS = {
     history: "Cronologia", history_created: "Creato", history_completed: "Completato", history_reopened: "Riaperto",
     history_reset: "Ripristino automatico", history_changed: "modificato", history_empty: "Nessuna cronologia", hist_title: "Titolo", history_disabled: "Disabilitato",
     ed_show_history: "Cronologie", hist_by_user: "Utente",
+    comments: "Commenti", comment_placeholder: "Scrivi un commento… (@ per menzionare)", comment_send: "Invia", comment_edit: "Modifica", comment_save: "Salva", comment_edited: "modificato", comment_by_automation: "Automazione", comment_err_person: "La persona menzionata non esiste.", comment_err_mentions: "Un commento può menzionare al massimo 10 persone.", comment_err_failed: "Impossibile salvare il commento.", confirm_delete_comment: "Eliminare questo commento?",
+    ed_show_comments: "Commenti", ed_badge_comments: "Numero di commenti", history_commented: "Commento", history_mentioned: "ha menzionato", hist_section: "Colonna", hist_section_deleted: "(sezione eliminata)", history_sub_added: "Sotto-attività aggiunta", history_sub_completed: "Sotto-attività completata", history_sub_reopened: "Sotto-attività riaperta", history_sub_deleted: "Sotto-attività eliminata", history_moved: "Spostata dall'elenco {0}",
     ed_show_add_task: "Aggiungi attività",
     assigned_unknown: "Sconosciuto (%s)", recurrence_readonly: "Gestito da %s", synced_with: "Sincronizzato con %s",
     due_today: "Oggi", due_tomorrow: "Domani", due_yesterday: "Ieri",
@@ -499,6 +505,8 @@ const _TRANSLATIONS = {
     history: "Historia", history_created: "Utworzono", history_completed: "Uko\u0144czono", history_reopened: "Ponownie otwarto",
     history_reset: "Auto-reset", history_changed: "zmieniono", history_empty: "Brak historii", hist_title: "Tytu\u0142", history_disabled: "Wy\u0142\u0105czono",
     ed_show_history: "Historie", hist_by_user: "U\u017cytkownik",
+    comments: "Komentarze", comment_placeholder: "Napisz komentarz… (@ aby wspomnieć)", comment_send: "Wyślij", comment_edit: "Edytuj", comment_save: "Zapisz", comment_edited: "edytowano", comment_by_automation: "Automatyzacja", comment_err_person: "Wspomniana osoba nie istnieje.", comment_err_mentions: "Komentarz może wspomnieć najwyżej 10 osób.", comment_err_failed: "Nie udało się zapisać komentarza.", confirm_delete_comment: "Usunąć ten komentarz?",
+    ed_show_comments: "Komentarze", ed_badge_comments: "Liczba komentarzy", history_commented: "Komentarz", history_mentioned: "wspomniał(a)", hist_section: "Kolumna", hist_section_deleted: "(usunięta sekcja)", history_sub_added: "Dodano podzadanie", history_sub_completed: "Ukończono podzadanie", history_sub_reopened: "Wznowiono podzadanie", history_sub_deleted: "Usunięto podzadanie", history_moved: "Przeniesiono z listy {0}",
     ed_show_add_task: "Dodaj zadanie",
     assigned_unknown: "Nieznany (%s)", recurrence_readonly: "Zarz\u0105dzane przez %s", synced_with: "Zsynchronizowane z %s",
     due_today: "Dzisiaj", due_tomorrow: "Jutro", due_yesterday: "Wczoraj",
@@ -604,6 +612,8 @@ const _TRANSLATIONS = {
     history: "Historik", history_created: "Skapad", history_completed: "Avklarad", history_reopened: "\u00d6ppnad igen",
     history_reset: "Auto-\u00e5terst\u00e4lld", history_changed: "\u00e4ndrad", history_empty: "Ingen historik", hist_title: "Titel", history_disabled: "Inaktiverad",
     ed_show_history: "Historiker", hist_by_user: "Anv\u00e4ndare",
+    comments: "Kommentarer", comment_placeholder: "Skriv en kommentar… (@ för att nämna)", comment_send: "Skicka", comment_edit: "Redigera", comment_save: "Spara", comment_edited: "redigerad", comment_by_automation: "Automation", comment_err_person: "Den nämnda personen finns inte.", comment_err_mentions: "En kommentar kan nämna högst 10 personer.", comment_err_failed: "Kommentaren kunde inte sparas.", confirm_delete_comment: "Ta bort den här kommentaren?",
+    ed_show_comments: "Kommentarer", ed_badge_comments: "Antal kommentarer", history_commented: "Kommentar", history_mentioned: "nämnde", hist_section: "Kolumn", hist_section_deleted: "(borttagen sektion)", history_sub_added: "Deluppgift tillagd", history_sub_completed: "Deluppgift slutförd", history_sub_reopened: "Deluppgift återöppnad", history_sub_deleted: "Deluppgift borttagen", history_moved: "Flyttad från listan {0}",
     ed_show_add_task: "L\u00e4gg till uppgift",
     assigned_unknown: "Ok\u00e4nd (%s)", recurrence_readonly: "Hanteras av %s", synced_with: "Synkroniserat med %s",
     due_today: "Idag", due_tomorrow: "Imorgon", due_yesterday: "Ig\u00e5r",
@@ -709,6 +719,8 @@ const _TRANSLATIONS = {
     history: "Historique", history_created: "Cr\u00e9\u00e9", history_completed: "Termin\u00e9", history_reopened: "R\u00e9ouvert",
     history_reset: "R\u00e9initialisation auto.", history_changed: "modifi\u00e9", history_empty: "Aucun historique", hist_title: "Titre", history_disabled: "D\u00e9sactiv\u00e9",
     ed_show_history: "Historiques", hist_by_user: "Utilisateur",
+    comments: "Commentaires", comment_placeholder: "Écrire un commentaire… (@ pour mentionner)", comment_send: "Envoyer", comment_edit: "Modifier", comment_save: "Enregistrer", comment_edited: "modifié", comment_by_automation: "Automatisation", comment_err_person: "La personne mentionnée n'existe pas.", comment_err_mentions: "Un commentaire peut mentionner 10 personnes au maximum.", comment_err_failed: "Le commentaire n'a pas pu être enregistré.", confirm_delete_comment: "Supprimer ce commentaire ?",
+    ed_show_comments: "Commentaires", ed_badge_comments: "Nombre de commentaires", history_commented: "Commentaire", history_mentioned: "a mentionné", hist_section: "Colonne", hist_section_deleted: "(section supprimée)", history_sub_added: "Sous-tâche ajoutée", history_sub_completed: "Sous-tâche terminée", history_sub_reopened: "Sous-tâche rouverte", history_sub_deleted: "Sous-tâche supprimée", history_moved: "Déplacée depuis la liste {0}",
     ed_show_add_task: "Ajouter t\u00e2che",
     assigned_unknown: "Inconnu (%s)", recurrence_readonly: "G\u00e9r\u00e9 par %s", synced_with: "Synchronis\u00e9 avec %s",
     due_today: "Aujourd'hui", due_tomorrow: "Demain", due_yesterday: "Hier",
@@ -814,6 +826,8 @@ const _TRANSLATIONS = {
     history: "Hist\u00f3rico", history_created: "Criado", history_completed: "Conclu\u00eddo", history_reopened: "Reaberto",
     history_reset: "Reiniciado automaticamente", history_changed: "alterado", history_empty: "Sem hist\u00f3rico", hist_title: "T\u00edtulo", history_disabled: "Desativado",
     ed_show_history: "Hist\u00f3ricos", hist_by_user: "Utilizador",
+    comments: "Comentários", comment_placeholder: "Escreva um comentário… (@ para mencionar)", comment_send: "Enviar", comment_edit: "Editar", comment_save: "Guardar", comment_edited: "editado", comment_by_automation: "Automação", comment_err_person: "A pessoa mencionada não existe.", comment_err_mentions: "Um comentário pode mencionar no máximo 10 pessoas.", comment_err_failed: "Não foi possível guardar o comentário.", confirm_delete_comment: "Eliminar este comentário?",
+    ed_show_comments: "Comentários", ed_badge_comments: "Número de comentários", history_commented: "Comentário", history_mentioned: "mencionou", hist_section: "Coluna", hist_section_deleted: "(secção eliminada)", history_sub_added: "Subtarefa adicionada", history_sub_completed: "Subtarefa concluída", history_sub_reopened: "Subtarefa reaberta", history_sub_deleted: "Subtarefa eliminada", history_moved: "Movida da lista {0}",
     ed_show_add_task: "Adicionar tarefa",
     assigned_unknown: "Desconhecido (%s)", recurrence_readonly: "Gerenciado por %s", synced_with: "Sincronizado com %s",
     due_today: "Hoje", due_tomorrow: "Amanh\u00e3", due_yesterday: "Ontem",
@@ -919,6 +933,8 @@ const _TRANSLATIONS = {
     history: "Historial", history_created: "Creado", history_completed: "Completado", history_reopened: "Reabierto",
     history_reset: "Restablecimiento autom.", history_changed: "modificado", history_empty: "Sin historial", hist_title: "T\u00edtulo", history_disabled: "Desactivado",
     ed_show_history: "Historiales", hist_by_user: "Usuario",
+    comments: "Comentarios", comment_placeholder: "Escribe un comentario… (@ para mencionar)", comment_send: "Enviar", comment_edit: "Editar", comment_save: "Guardar", comment_edited: "editado", comment_by_automation: "Automatización", comment_err_person: "La persona mencionada no existe.", comment_err_mentions: "Un comentario puede mencionar como máximo a 10 personas.", comment_err_failed: "No se pudo guardar el comentario.", confirm_delete_comment: "¿Eliminar este comentario?",
+    ed_show_comments: "Comentarios", ed_badge_comments: "Número de comentarios", history_commented: "Comentario", history_mentioned: "mencionó", hist_section: "Columna", hist_section_deleted: "(sección eliminada)", history_sub_added: "Subtarea añadida", history_sub_completed: "Subtarea completada", history_sub_reopened: "Subtarea reabierta", history_sub_deleted: "Subtarea eliminada", history_moved: "Movida desde la lista {0}",
     ed_show_add_task: "Agregar tarea",
     assigned_unknown: "Desconocido (%s)", recurrence_readonly: "Gestionado por %s", synced_with: "Sincronizado con %s",
     due_today: "Hoy", due_tomorrow: "Ma\u00f1ana", due_yesterday: "Ayer",
@@ -1024,6 +1040,8 @@ const _TRANSLATIONS = {
     history: "\u0418\u0441\u0442\u043e\u0440\u0438\u044f", history_created: "\u0421\u043e\u0437\u0434\u0430\u043d\u043e", history_completed: "\u0412\u044b\u043f\u043e\u043b\u043d\u0435\u043d\u043e", history_reopened: "\u041f\u0435\u0440\u0435\u043e\u0442\u043a\u0440\u044b\u0442\u043e",
     history_reset: "\u0410\u0432\u0442\u043e\u0441\u0431\u0440\u043e\u0441", history_changed: "\u0438\u0437\u043c\u0435\u043d\u0435\u043d\u043e", history_empty: "\u041d\u0435\u0442 \u0438\u0441\u0442\u043e\u0440\u0438\u0438", hist_title: "\u0417\u0430\u0433\u043e\u043b\u043e\u0432\u043e\u043a", history_disabled: "\u041e\u0442\u043a\u043b\u044e\u0447\u0435\u043d\u043e",
     ed_show_history: "\u0418\u0441\u0442\u043e\u0440\u0438\u0438", hist_by_user: "\u041f\u043e\u043b\u044c\u0437\u043e\u0432\u0430\u0442\u0435\u043b\u044c",
+    comments: "Комментарии", comment_placeholder: "Напишите комментарий… (@ — упомянуть)", comment_send: "Отправить", comment_edit: "Изменить", comment_save: "Сохранить", comment_edited: "изменён", comment_by_automation: "Автоматизация", comment_err_person: "Упомянутого человека не существует.", comment_err_mentions: "В комментарии можно упомянуть не более 10 человек.", comment_err_failed: "Не удалось сохранить комментарий.", confirm_delete_comment: "Удалить этот комментарий?",
+    ed_show_comments: "Комментарии", ed_badge_comments: "Число комментариев", history_commented: "Комментарий", history_mentioned: "упомянул(а)", hist_section: "Колонка", hist_section_deleted: "(удалённая секция)", history_sub_added: "Подзадача добавлена", history_sub_completed: "Подзадача выполнена", history_sub_reopened: "Подзадача открыта снова", history_sub_deleted: "Подзадача удалена", history_moved: "Перемещено из списка {0}",
     ed_show_add_task: "\u0414\u043e\u0431\u0430\u0432\u0438\u0442\u044c \u0437\u0430\u0434\u0430\u0447\u0443",
     assigned_unknown: "\u041d\u0435\u0438\u0437\u0432\u0435\u0441\u0442\u043d\u044b\u0439 (%s)", recurrence_readonly: "\u0423\u043f\u0440\u0430\u0432\u043b\u044f\u0435\u0442\u0441\u044f %s", synced_with: "\u0421\u0438\u043d\u0445\u0440\u043e\u043d\u0438\u0437\u0438\u0440\u043e\u0432\u0430\u043d\u043e \u0441 %s",
     due_today: "\u0421\u0435\u0433\u043e\u0434\u043d\u044f", due_tomorrow: "\u0417\u0430\u0432\u0442\u0440\u0430", due_yesterday: "\u0412\u0447\u0435\u0440\u0430",
@@ -1129,6 +1147,8 @@ const _TRANSLATIONS = {
     history: "Historie", history_created: "Vytvo\u0159eno", history_completed: "Dokon\u010deno", history_reopened: "Znovu otev\u0159eno",
     history_reset: "Automaticky obnoveno", history_changed: "zm\u011bn\u011bno", history_empty: "\u017d\u00e1dn\u00e1 historie", hist_title: "N\u00e1zev", history_disabled: "Deaktivov\u00e1no",
     ed_show_history: "Historie", hist_by_user: "U\u017eivatel",
+    comments: "Komentáře", comment_placeholder: "Napiš komentář… (@ pro zmínku)", comment_send: "Odeslat", comment_edit: "Upravit", comment_save: "Uložit", comment_edited: "upraveno", comment_by_automation: "Automatizace", comment_err_person: "Zmíněná osoba neexistuje.", comment_err_mentions: "Komentář může zmínit nejvýš 10 lidí.", comment_err_failed: "Komentář se nepodařilo uložit.", confirm_delete_comment: "Smazat tento komentář?",
+    ed_show_comments: "Komentáře", ed_badge_comments: "Počet komentářů", history_commented: "Komentář", history_mentioned: "zmínil(a)", hist_section: "Sloupec", hist_section_deleted: "(smazaná sekce)", history_sub_added: "Podúkol přidán", history_sub_completed: "Podúkol dokončen", history_sub_reopened: "Podúkol znovu otevřen", history_sub_deleted: "Podúkol smazán", history_moved: "Přesunuto ze seznamu {0}",
     ed_show_add_task: "P\u0159idat \u00fakol",
     assigned_unknown: "Nezn\u00e1m\u00fd (%s)", recurrence_readonly: "Spravov\u00e1no %s", synced_with: "Synchronizov\u00e1no s %s",
     due_today: "Dnes", due_tomorrow: "Z\u00edtra", due_yesterday: "V\u010dera",
@@ -1234,6 +1254,8 @@ const _TRANSLATIONS = {
     history: "Historik", history_created: "Oprettet", history_completed: "F\u00e6rdiggjort", history_reopened: "\u00c5bnet igen",
     history_reset: "Auto-nulstillet", history_changed: "\u00e6ndret", history_empty: "Ingen historik", hist_title: "Titel", history_disabled: "Deaktiveret",
     ed_show_history: "Historikker", hist_by_user: "Bruger",
+    comments: "Kommentarer", comment_placeholder: "Skriv en kommentar… (@ for at nævne)", comment_send: "Send", comment_edit: "Rediger", comment_save: "Gem", comment_edited: "redigeret", comment_by_automation: "Automatisering", comment_err_person: "Den nævnte person findes ikke.", comment_err_mentions: "En kommentar kan højst nævne 10 personer.", comment_err_failed: "Kommentaren kunne ikke gemmes.", confirm_delete_comment: "Slet denne kommentar?",
+    ed_show_comments: "Kommentarer", ed_badge_comments: "Antal kommentarer", history_commented: "Kommentar", history_mentioned: "nævnte", hist_section: "Kolonne", hist_section_deleted: "(slettet sektion)", history_sub_added: "Delopgave tilføjet", history_sub_completed: "Delopgave fuldført", history_sub_reopened: "Delopgave genåbnet", history_sub_deleted: "Delopgave slettet", history_moved: "Flyttet fra listen {0}",
     ed_show_add_task: "Tilf\u00f8j opgave",
     assigned_unknown: "Ukendt (%s)", recurrence_readonly: "Styret af %s", synced_with: "Synkroniseret med %s",
     due_today: "I dag", due_tomorrow: "I morgen", due_yesterday: "I g\u00e5r",
@@ -1339,6 +1361,8 @@ const _TRANSLATIONS = {
     history: "Historikk", history_created: "Opprettet", history_completed: "Fullf\u00f8rt", history_reopened: "\u00c5pnet igjen",
     history_reset: "Auto-tilbakestilt", history_changed: "endret", history_empty: "Ingen historikk", hist_title: "Tittel", history_disabled: "Deaktivert",
     ed_show_history: "Historikker", hist_by_user: "Bruker",
+    comments: "Kommentarer", comment_placeholder: "Skriv en kommentar… (@ for å nevne)", comment_send: "Send", comment_edit: "Rediger", comment_save: "Lagre", comment_edited: "redigert", comment_by_automation: "Automatisering", comment_err_person: "Den nevnte personen finnes ikke.", comment_err_mentions: "En kommentar kan høyst nevne 10 personer.", comment_err_failed: "Kommentaren kunne ikke lagres.", confirm_delete_comment: "Slette denne kommentaren?",
+    ed_show_comments: "Kommentarer", ed_badge_comments: "Antall kommentarer", history_commented: "Kommentar", history_mentioned: "nevnte", hist_section: "Kolonne", hist_section_deleted: "(slettet seksjon)", history_sub_added: "Deloppgave lagt til", history_sub_completed: "Deloppgave fullført", history_sub_reopened: "Deloppgave gjenåpnet", history_sub_deleted: "Deloppgave slettet", history_moved: "Flyttet fra listen {0}",
     ed_show_add_task: "Legg til oppgave",
     assigned_unknown: "Ukjent (%s)", recurrence_readonly: "Administrert av %s", synced_with: "Synkronisert med %s",
     due_today: "I dag", due_tomorrow: "I morgen", due_yesterday: "I g\u00e5r",
@@ -1444,6 +1468,8 @@ const _TRANSLATIONS = {
     history: "Historia", history_created: "Luotu", history_completed: "Valmis", history_reopened: "Avattu uudelleen",
     history_reset: "Automaattinen palautus", history_changed: "muutettu", history_empty: "Ei historiaa", hist_title: "Otsikko", history_disabled: "K\u00e4yt\u00f6ss\u00e4 poistettu",
     ed_show_history: "Historiat", hist_by_user: "K\u00e4ytt\u00e4j\u00e4",
+    comments: "Kommentit", comment_placeholder: "Kirjoita kommentti… (@ mainitaksesi)", comment_send: "Lähetä", comment_edit: "Muokkaa", comment_save: "Tallenna", comment_edited: "muokattu", comment_by_automation: "Automaatio", comment_err_person: "Mainittua henkilöä ei ole olemassa.", comment_err_mentions: "Kommentissa voi mainita enintään 10 henkilöä.", comment_err_failed: "Kommenttia ei voitu tallentaa.", confirm_delete_comment: "Poistetaanko tämä kommentti?",
+    ed_show_comments: "Kommentit", ed_badge_comments: "Kommenttien määrä", history_commented: "Kommentti", history_mentioned: "mainitsi", hist_section: "Sarake", hist_section_deleted: "(poistettu osio)", history_sub_added: "Alitehtävä lisätty", history_sub_completed: "Alitehtävä valmis", history_sub_reopened: "Alitehtävä avattu uudelleen", history_sub_deleted: "Alitehtävä poistettu", history_moved: "Siirretty listalta {0}",
     ed_show_add_task: "Lis\u00e4\u00e4 teht\u00e4v\u00e4",
     assigned_unknown: "Tuntematon (%s)", recurrence_readonly: "Hallinnoi %s", synced_with: "Synkronoitu %s kanssa",
     due_today: "T\u00e4n\u00e4\u00e4n", due_tomorrow: "Huomenna", due_yesterday: "Eilen",
@@ -1549,6 +1575,8 @@ const _TRANSLATIONS = {
     history: "El\u0151zm\u00e9nyek", history_created: "L\u00e9trehozva", history_completed: "Teljes\u00edtve", history_reopened: "\u00dajranyitva",
     history_reset: "Automatikus visszavonas", history_changed: "m\u00f3dos\u00edtva", history_empty: "Nincs el\u0151zm\u00e9ny", hist_title: "C\u00edm", history_disabled: "Letiltva",
     ed_show_history: "El\u0151zm\u00e9nyek", hist_by_user: "Felhaszn\u00e1l\u00f3",
+    comments: "Megjegyzések", comment_placeholder: "Írj megjegyzést… (@ az említéshez)", comment_send: "Küldés", comment_edit: "Szerkesztés", comment_save: "Mentés", comment_edited: "szerkesztve", comment_by_automation: "Automatizálás", comment_err_person: "A megemlített személy nem létezik.", comment_err_mentions: "Egy megjegyzés legfeljebb 10 személyt említhet.", comment_err_failed: "A megjegyzést nem sikerült menteni.", confirm_delete_comment: "Törlöd ezt a megjegyzést?",
+    ed_show_comments: "Megjegyzések", ed_badge_comments: "Megjegyzések száma", history_commented: "Megjegyzés", history_mentioned: "megemlítette", hist_section: "Oszlop", hist_section_deleted: "(törölt szakasz)", history_sub_added: "Részfeladat hozzáadva", history_sub_completed: "Részfeladat befejezve", history_sub_reopened: "Részfeladat újranyitva", history_sub_deleted: "Részfeladat törölve", history_moved: "Áthelyezve a(z) {0} listáról",
     ed_show_add_task: "Feladat hozz\u00e1ad\u00e1sa",
     assigned_unknown: "Ismeretlen (%s)", recurrence_readonly: "Kezeli: %s", synced_with: "Szinkroniz\u00e1lva: %s",
     due_today: "Ma", due_tomorrow: "Holnap", due_yesterday: "Tegnap",
@@ -1707,6 +1735,8 @@ const _TRANSLATIONS = {
     history: "Verlauf", history_created: "Erstellt", history_completed: "Erledigt", history_reopened: "Wieder ge\u00f6ffnet",
     history_reset: "Automatisch zur\u00fcckgesetzt", history_changed: "ge\u00e4ndert", history_empty: "Noch kein Verlauf", hist_title: "Titel", history_disabled: "Deaktiviert",
     ed_show_history: "Verläufe", hist_by_user: "Benutzer",
+    comments: "Kommentare", comment_placeholder: "Kommentar schreiben… (@ zum Erwähnen)", comment_send: "Senden", comment_edit: "Bearbeiten", comment_save: "Speichern", comment_edited: "bearbeitet", comment_by_automation: "Automatisierung", comment_err_person: "Die erwähnte Person existiert nicht.", comment_err_mentions: "Ein Kommentar kann höchstens 10 Personen erwähnen.", comment_err_failed: "Der Kommentar konnte nicht gespeichert werden.", confirm_delete_comment: "Diesen Kommentar löschen?",
+    ed_show_comments: "Kommentare", ed_badge_comments: "Anzahl der Kommentare", history_commented: "Kommentar", history_mentioned: "erwähnte", hist_section: "Spalte", hist_section_deleted: "(gelöschter Abschnitt)", history_sub_added: "Unteraufgabe hinzugefügt", history_sub_completed: "Unteraufgabe erledigt", history_sub_reopened: "Unteraufgabe wieder geöffnet", history_sub_deleted: "Unteraufgabe gelöscht", history_moved: "Verschoben aus Liste {0}",
     ed_show_images: "Bilder",
     ed_view_mode: "Ansichtsmodus", ed_view_mode_list: "Liste", ed_view_mode_tiles: "Kacheln", ed_view_mode_board: "Board", board_open: "Offen", board_no_section: "Ohne Abschnitt", board_add_card: "Aufgabe hinzufügen", board_more_done: "+{0} weitere", ed_board_done_column: "Spalte „Erledigt“", ed_board_add_per_lane: "Hinzufügen-Button in jeder Spalte", ed_board_help: "Board: Abschnitte werden zu Spalten. Eine Aufgabe in eine andere Spalte ziehen ändert ihren Abschnitt, nach Erledigt ziehen schließt sie ab.",
     ed_layout: "Layout", ed_layout_columns: "Spalten nebeneinander", ed_layout_tabs: "Tabs", ed_tab_counts: "Aufgabenanzahl in den Tabs", new_board: "Neues Board", new_board_name: "Name des neuen Boards", new_board_sections_from: "Abschnitte kopieren von", new_board_sections_none: "Keine", new_board_create: "Erstellen", new_board_err_empty: "Gib einen Namen für das Board ein.", new_board_err_duplicate: "Eine Liste mit diesem Namen existiert bereits.", new_board_err_max: "Die maximale Anzahl an Listen ist erreicht.", new_board_err_failed: "Das Board konnte nicht erstellt werden.", new_board_err_card: "Diese Karte wurde in der Dashboard-Konfiguration nicht gefunden. Füge das Board im Karteneditor hinzu.", new_board_err_save: "Die Liste wurde erstellt, konnte aber nicht zu dieser Karte hinzugefügt werden. Füge sie im Karteneditor hinzu.", ed_tab_add: "+-Schaltfläche für ein neues Board",
@@ -1916,6 +1946,9 @@ class HomeTasksCard extends HTMLElement {
     this._boardDragOrigin = null;            // { completed, sectionId } of that card at drag start
     this._boardAddOpen = new Set();          // "<colIdx>:<laneId>" with the add input open
     this._boardAddText = new Map();          // "<colIdx>:<laneId>" → text typed so far
+    // Comments: drafts live here so a re-render keeps what is typed
+    this._commentDrafts = new Map();         // taskId → { text, mentions: Map("Name" → "person.x") }
+    this._commentEdits = new Map();          // commentId → the same, for a comment being edited
     this._boardScroll = new Map();           // colIdx → board scrollLeft, kept across rebuilds
     // "+" new board form (layout: tabs)
     this._rawConfig = null;                  // config as HA passed it (see setConfig)
@@ -3573,7 +3606,11 @@ class HomeTasksCard extends HTMLElement {
         && active.dataset?.focusKey === "notes";
       // Same for the new-board name: a rebuild under the keyboard flickers it.
       const activeNewBoard = active && active.dataset?.focusKey === "new_board_name";
-      if (activeStateful || activeNotes || activeNewBoard) {
+      // And for a comment being written or edited (same keyboard reason;
+      // the draft itself lives on the card and survives either way).
+      const activeComment = active && active.tagName === "TEXTAREA"
+        && /^comment_/.test(active.dataset?.focusKey || "");
+      if (activeStateful || activeNotes || activeNewBoard || activeComment) {
         this._deferRenderUntilBlur(active, true);
         return;
       }
@@ -6132,6 +6169,15 @@ class HomeTasksCard extends HTMLElement {
     if (task.reminders && task.reminders.length > 0 && col.show_reminders !== false && col.badge_reminders !== false) {
       meta.push(this._buildReminderBadge(task));
     }
+    const comments = task.comments;
+    if (comments && comments.length > 0 && !this._isExternalCol(colIdx)
+        && col.show_comments !== false && col.badge_comments !== false) {
+      const mentioned = comments.some((c) => this._commentMentionsViewer(c));
+      meta.push(this._el("span", {
+        className: "comment-badge" + (mentioned ? " badge-mention-me" : ""),
+        textContent: (mentioned ? "@" : "") + "\u{1F4AC} " + comments.length,
+      }));
+    }
     return meta;
   }
 
@@ -6474,7 +6520,11 @@ class HomeTasksCard extends HTMLElement {
     if (col.show_due_date !== false) details.push(this._buildDateSection(task, colIdx));
     if (col.show_reminders !== false) details.push(this._buildRemindersSection(task, colIdx));
     if (col.show_recurrence !== false) details.push(this._buildRecurrenceSection(task, colIdx));
-    if (col.show_history) details.push(this._buildHistorySection(task));
+    if (col.show_comments !== false && !this._isExternalCol(colIdx)) details.push(this._buildCommentsSection(task, colIdx));
+    // A board card has no room for a detail pane worth the name without its
+    // history: there it counts as on unless switched off.
+    const showHistory = col.view_mode === "board" ? col.show_history !== false : !!col.show_history;
+    if (showHistory) details.push(this._buildHistorySection(task, colIdx));
     if (col.show_images === true) details.push(this._buildImageSection(task, colIdx));
     details.push(this._buildActionsSection(task, colIdx));
 
@@ -6696,6 +6746,374 @@ class HomeTasksCard extends HTMLElement {
     if (currentNotes().trim() && !this._notesEditing.has(task.id)) showView();
     else showEditor(false);
     return section;
+  }
+
+  // --- Comments (native lists) ---
+
+  // The viewer's own person entity: the person.* whose user_id is theirs.
+  _viewerPerson() {
+    const uid = this._hass?.user?.id;
+    if (!uid) return null;
+    const states = this._hass?.states || {};
+    for (const [eid, st] of Object.entries(states)) {
+      if (eid.startsWith("person.") && st?.attributes?.user_id === uid) return eid;
+    }
+    return null;
+  }
+
+  // Friendly name of an existing person, null when the person is gone.
+  _personNameIfKnown(eid) {
+    const st = eid && this._hass?.states?.[eid];
+    if (!st) return null;
+    return st.attributes?.friendly_name || eid;
+  }
+
+  // Lower case with the diacritics stripped, so "án" finds "Anna".
+  _foldText(s) {
+    return String(s || "").normalize("NFD").replace(/\p{M}/gu, "").toLowerCase();
+  }
+
+  // person.* states matching the @query: a prefix of any word of the name.
+  _mentionCandidates(query) {
+    const q = this._foldText(query);
+    const out = [];
+    for (const [eid, st] of Object.entries(this._hass?.states || {})) {
+      if (!eid.startsWith("person.")) continue;
+      const name = st?.attributes?.friendly_name || eid;
+      const words = this._foldText(name).split(/[\s._\-]+/).filter(Boolean);
+      if (!q || words.some((w) => w.startsWith(q))) out.push({ eid, name });
+    }
+    out.sort((a, b) => a.name.localeCompare(b.name));
+    return out;
+  }
+
+  // "<@person.x>" tokens → "@Name" for editing; the draft's map is rebuilt.
+  _commentTokensToDraft(text) {
+    const mentions = new Map();
+    const out = (text || "").replace(/<@(person\.[a-z0-9_]+)>/g, (_, eid) => {
+      const name = this._personNameIfKnown(eid) || eid;
+      mentions.set(name, eid);
+      return "@" + name;
+    });
+    return { text: out, mentions };
+  }
+
+  // "@Name" → "<@person.x>" for every map entry that still occurs in the
+  // text, longest names first so "@Anna Marie" wins over "@Anna". A mention
+  // the user has since broken stays plain text.
+  _commentDraftToTokens(draft) {
+    const text = draft.text || "";
+    const names = [...draft.mentions.keys()].sort((a, b) => b.length - a.length);
+    if (!names.length) return text;
+    const esc = (s) => s.replace(/[.*+?^${}()|[\]\\\/-]/g, "\\$&");
+    const re = new RegExp(
+      `(?<![\\p{L}\\p{N}_])@(${names.map(esc).join("|")})(?![\\p{L}\\p{N}_])`, "gu");
+    return text.replace(re, (_, name) => `<@${draft.mentions.get(name)}>`);
+  }
+
+  // Fill *container* with a comment's text: links, and mention tokens as chips.
+  _renderCommentText(container, text) {
+    const me = this._viewerPerson();
+    const re = /<@(person\.[a-z0-9_]+)>/g;
+    let pos = 0;
+    let m;
+    while ((m = re.exec(text || "")) !== null) {
+      if (m.index > pos) this._renderLinkified(container, text.slice(pos, m.index));
+      const eid = m[1];
+      const known = this._personNameIfKnown(eid);
+      container.appendChild(this._el("span", {
+        className: "mention" + (known ? "" : " mention-removed") + (known && eid === me ? " mention-me" : ""),
+        textContent: "@" + (known || eid),
+      }));
+      pos = m.index + m[0].length;
+    }
+    if (pos < (text || "").length) this._renderLinkified(container, text.slice(pos));
+  }
+
+  _commentMentionsViewer(comment) {
+    const me = this._viewerPerson();
+    if (!me) return false;
+    const list = Array.isArray(comment.mentions)
+      ? comment.mentions
+      : [...(comment.text || "").matchAll(/<@(person\.[a-z0-9_]+)>/g)].map((x) => x[1]);
+    return list.includes(me);
+  }
+
+  _commentErrorText(err) {
+    const code = err && err.code;
+    if (code === "unknown_person") return this._t("comment_err_person");
+    if (code === "too_many_mentions") return this._t("comment_err_mentions");
+    return this._t("comment_err_failed");
+  }
+
+  // The @ picker of a comment textarea.  *draft* ({text, mentions}) lives on
+  // the card, so what is typed and who is mentioned survives a re-render.
+  // Returns the picker element, to be placed under the textarea.
+  _attachMentionPicker(ta, draft, { onSubmit = null, onCancel = null } = {}) {
+    const picker = this._el("div", { className: "mention-picker" });
+    picker.style.display = "none";
+    let matches = [];
+    let active = 0;
+    let range = null;
+
+    const close = () => {
+      matches = [];
+      range = null;
+      picker.style.display = "none";
+      picker.replaceChildren();
+    };
+    const insert = (i) => {
+      const p = matches[i];
+      if (!p || !range) return;
+      const ins = `@${p.name} `;
+      ta.value = ta.value.slice(0, range.start) + ins + ta.value.slice(range.end);
+      const caret = range.start + ins.length;
+      draft.text = ta.value;
+      draft.mentions.set(p.name, p.eid);
+      close();
+      this._autoGrowTextarea(ta);
+      try { ta.setSelectionRange(caret, caret); } catch { /* noop */ }
+      ta.focus();
+    };
+    const paint = () => {
+      picker.replaceChildren(...matches.map((p, i) => {
+        const row = this._el("div", {
+          className: "mention-option" + (i === active ? " active" : ""),
+          role: "option",
+        }, [this._buildPersonAvatar(p.eid, p.name), this._el("span", { textContent: p.name })]);
+        // mousedown, not click: the textarea must keep focus.
+        row.addEventListener("mousedown", (e) => { e.preventDefault(); insert(i); });
+        return row;
+      }));
+    };
+    const refresh = () => {
+      const caret = ta.selectionStart ?? ta.value.length;
+      const before = ta.value.slice(0, caret);
+      const m = /(^|\s)@([\p{L}\p{N}_.\-]*)$/u.exec(before);
+      const found = m ? this._mentionCandidates(m[2]).slice(0, 8) : [];
+      if (!found.length) { close(); return; }
+      matches = found;
+      active = 0;
+      range = { start: caret - m[2].length - 1, end: caret };
+      paint();
+      picker.style.display = "";
+      // Open upwards when the details below would clip it.
+      const room = (ta.closest(".task-details") || document.documentElement).getBoundingClientRect().bottom
+        - ta.getBoundingClientRect().bottom;
+      picker.classList.toggle("above", room < matches.length * 34 + 8);
+    };
+
+    ta.addEventListener("input", () => {
+      draft.text = ta.value;
+      this._autoGrowTextarea(ta);
+      refresh();
+    });
+    ta.addEventListener("click", refresh);
+    ta.addEventListener("keyup", (e) => {
+      if (["ArrowLeft", "ArrowRight", "Home", "End"].includes(e.key)) refresh();
+    });
+    ta.addEventListener("blur", close);
+    ta.addEventListener("keydown", (e) => {
+      if (matches.length) {
+        if (e.key === "ArrowDown" || e.key === "ArrowUp") {
+          e.preventDefault();
+          active = (active + (e.key === "ArrowDown" ? 1 : matches.length - 1)) % matches.length;
+          paint();
+          return;
+        }
+        if (e.key === "Enter" || e.key === "Tab") {
+          e.preventDefault();
+          insert(active);
+          return;
+        }
+        if (e.key === "Escape") { e.preventDefault(); e.stopPropagation(); close(); return; }
+      }
+      if (e.key === "Enter" && (e.ctrlKey || e.metaKey) && onSubmit) {
+        e.preventDefault();
+        onSubmit();
+      } else if (e.key === "Escape" && onCancel) {
+        e.preventDefault();
+        onCancel();
+      }
+    });
+    return picker;
+  }
+
+  _buildCommentsSection(task, colIdx) {
+    const user = this._hass?.user || {};
+    const listId = this._colListId(colIdx);
+    const currentTask = () =>
+      this._columns[colIdx]?.tasks?.find((t) => t.id === task.id) || task;
+    if (!this._commentDrafts) this._commentDrafts = new Map();   // taskId → {text, mentions}
+    if (!this._commentEdits) this._commentEdits = new Map();     // commentId → {text, mentions}
+    const canModify = (c) => !!user.is_admin || (c.by_user_id != null && c.by_user_id === user.id);
+
+    const list = this._el("div", { className: "comment-list" });
+    const iconBtn = (cls, icon, title, onClick) => {
+      const btn = this._el("button", { className: `comment-action ${cls}`, title, type: "button" });
+      btn.setAttribute("aria-label", title);
+      const ico = document.createElement("ha-icon");
+      ico.setAttribute("icon", icon);
+      btn.appendChild(ico);
+      btn.addEventListener("click", onClick);
+      return btn;
+    };
+
+    const buildComment = (c) => {
+      const personName = this._personNameIfKnown(c.by_person);
+      const name = personName || c.by || this._t("comment_by_automation");
+      const avatar = c.by_person
+        ? this._buildPersonAvatar(c.by_person, name)
+        : this._buildInitialsAvatar(name, name);
+      const head = [
+        this._el("span", { className: "comment-author", textContent: name }),
+        this._el("span", {
+          className: "comment-ts",
+          textContent: this._fmtTimestamp(new Date(c.ts))
+            + (c.edited_ts ? ` · ${this._t("comment_edited")}` : ""),
+        }),
+      ];
+      const actions = this._el("span", { className: "comment-actions" });
+      const body = this._el("div", { className: "comment-text" });
+      const editing = this._commentEdits.get(c.id);
+      if (canModify(c) && !editing) {
+        actions.append(
+          iconBtn("comment-edit-btn", "mdi:pencil", this._t("comment_edit"), () => {
+            this._commentEdits.set(c.id, this._commentTokensToDraft(c.text));
+            fillList();
+            list.querySelector(`[data-comment-id="${CSS.escape(c.id)}"] textarea`)?.focus();
+          }),
+          iconBtn("comment-delete-btn", "mdi:delete-outline", this._t("delete_sub"), async () => {
+            const ok = await this._confirmDialog(
+              this._t("confirm_delete_comment"), this._t("confirm_delete_task_ok"), true);
+            if (!ok) return;
+            try {
+              await this._callWs("home_tasks/delete_comment",
+                { list_id: listId, task_id: task.id, comment_id: c.id }, { rethrow: true });
+            } catch { this._showError(this._t("comment_err_failed")); return; }
+            const t = currentTask();
+            t.comments = (t.comments || []).filter((x) => x.id !== c.id);
+            this._commentEdits.delete(c.id);
+            fillList();
+            this._render();
+          }),
+        );
+      }
+      if (editing) body.appendChild(buildEditor(c, editing));
+      else this._renderCommentText(body, c.text);
+      return this._el("div", { className: "comment", "data-comment-id": c.id }, [
+        avatar,
+        this._el("div", { className: "comment-main" }, [
+          this._el("div", { className: "comment-head" }, [...head, actions]),
+          body,
+        ]),
+      ]);
+    };
+
+    const buildEditor = (c, draft) => {
+      const ta = this._el("textarea", {
+        className: "comment-input comment-edit-input",
+        rows: 2,
+        value: draft.text,
+        "data-focus-key": `comment_edit_${c.id}`,
+      });
+      const err = this._el("div", { className: "comment-error", role: "alert" });
+      const cancel = () => { this._commentEdits.delete(c.id); fillList(); };
+      let busy = false;
+      const save = async () => {
+        if (busy) return;
+        const text = this._commentDraftToTokens(draft).trim();
+        if (!text) return;
+        busy = true;
+        err.textContent = "";
+        try {
+          const updated = await this._callWs("home_tasks/update_comment",
+            { list_id: listId, task_id: task.id, comment_id: c.id, text }, { rethrow: true });
+          const t = currentTask();
+          t.comments = (t.comments || []).map((x) => (x.id === c.id ? (updated || { ...x, text }) : x));
+          this._commentEdits.delete(c.id);
+          fillList();
+          this._render();
+        } catch (e) {
+          err.textContent = this._commentErrorText(e);
+        } finally { busy = false; }
+      };
+      const picker = this._attachMentionPicker(ta, draft, { onSubmit: save, onCancel: cancel });
+      const saveBtn = this._el("button", {
+        className: "comment-btn primary", type: "button", textContent: this._t("comment_save"),
+      });
+      saveBtn.addEventListener("click", save);
+      const cancelBtn = this._el("button", {
+        className: "comment-btn", type: "button", textContent: this._t("dialog_cancel"),
+      });
+      cancelBtn.addEventListener("click", cancel);
+      requestAnimationFrame(() => this._autoGrowTextarea(ta));
+      return this._el("div", { className: "comment-editor" }, [
+        this._el("div", { className: "comment-input-wrap" }, [ta, picker]),
+        err,
+        this._el("div", { className: "comment-edit-buttons" }, [saveBtn, cancelBtn]),
+      ]);
+    };
+
+    const fillList = () => {
+      list.replaceChildren(...(currentTask().comments || []).map(buildComment));
+    };
+    fillList();
+
+    // New comment.  The draft is keyed by task, so it outlives the DOM.
+    if (!this._commentDrafts.has(task.id)) this._commentDrafts.set(task.id, { text: "", mentions: new Map() });
+    const draft = this._commentDrafts.get(task.id);
+    const input = this._el("textarea", {
+      className: "comment-input",
+      rows: 1,
+      placeholder: this._t("comment_placeholder"),
+      value: draft.text,
+      "data-focus-key": `comment_${task.id}`,
+    });
+    const error = this._el("div", { className: "comment-error", role: "alert" });
+    let sending = false;
+    const send = async () => {
+      if (sending) return;
+      const text = this._commentDraftToTokens(draft).trim();
+      if (!text) return;
+      sending = true;
+      error.textContent = "";
+      try {
+        const comment = await this._callWs("home_tasks/add_comment",
+          { list_id: listId, task_id: task.id, text }, { rethrow: true });
+        const t = currentTask();
+        t.comments = [...(t.comments || []), comment];
+        this._commentDrafts.delete(task.id);
+        draft.text = "";
+        draft.mentions = new Map();
+        input.value = "";
+        this._autoGrowTextarea(input);
+        fillList();
+        this._render();
+      } catch (e) {
+        error.textContent = this._commentErrorText(e);
+      } finally { sending = false; }
+    };
+    const picker = this._attachMentionPicker(input, draft, { onSubmit: send });
+    const sendBtn = this._el("button", {
+      className: "comment-send", type: "button", title: this._t("comment_send"),
+    });
+    sendBtn.setAttribute("aria-label", this._t("comment_send"));
+    const sendIco = document.createElement("ha-icon");
+    sendIco.setAttribute("icon", "mdi:send");
+    sendBtn.appendChild(sendIco);
+    sendBtn.addEventListener("click", send);
+    requestAnimationFrame(() => this._autoGrowTextarea(input));
+
+    return this._el("div", { className: "detail-section comments-section" }, [
+      this._el("label", { className: "detail-label", textContent: this._t("comments") }),
+      list,
+      this._el("div", { className: "comment-compose" }, [
+        this._el("div", { className: "comment-input-wrap" }, [input, picker]),
+        sendBtn,
+      ]),
+      error,
+    ]);
   }
 
   _buildSubTasksSection(task, colIdx) {
@@ -8556,14 +8974,14 @@ class HomeTasksCard extends HTMLElement {
     }
   }
 
-  _buildHistorySection(task) {
+  _buildHistorySection(task, colIdx) {
     const taskHistory = (task.history || []).slice().reverse();
     const histContent = this._el("div", { className: "history-list" });
     if (taskHistory.length === 0) {
       histContent.appendChild(this._el("p", { className: "history-empty", textContent: this._t("history_empty") }));
     } else {
       for (const entry of taskHistory) {
-        histContent.appendChild(this._buildHistoryEntry(entry));
+        histContent.appendChild(this._buildHistoryEntry(entry, colIdx));
       }
     }
     return this._el("div", { className: "detail-section" }, [
@@ -8572,11 +8990,11 @@ class HomeTasksCard extends HTMLElement {
     ]);
   }
 
-  _buildHistoryEntry(entry) {
+  _buildHistoryEntry(entry, colIdx) {
     const row = this._el("div", { className: "history-entry" });
     const ts = new Date(entry.ts);
     const tsStr = this._fmtTimestamp(ts);
-    const { icon, text } = this._formatHistoryEntry(entry);
+    const { icon, text } = this._formatHistoryEntry(entry, colIdx);
     const byLabel = entry.by && entry.by !== "recurrence"
       ? ` \u00b7 ${entry.by === "user" ? this._t("hist_by_user") : entry.by}`
       : "";
@@ -8586,7 +9004,7 @@ class HomeTasksCard extends HTMLElement {
     return row;
   }
 
-  _formatHistoryEntry(entry) {
+  _formatHistoryEntry(entry, colIdx) {
     if (entry.action === "created") {
       return { icon: "\u2605", text: this._t("history_created") };
     }
@@ -8598,12 +9016,26 @@ class HomeTasksCard extends HTMLElement {
       return { icon: "\u21BA", text };
     }
     if (entry.action === "updated") {
-      return { icon: "\u270e", text: this._formatHistoryUpdateText(entry) };
+      return { icon: "\u270e", text: this._formatHistoryUpdateText(entry, colIdx) };
+    }
+    if (entry.action === "commented") {
+      const names = (entry.mentions || []).map((eid) => "@" + (this._personNameIfKnown(eid) || eid));
+      const text = this._t("history_commented")
+        + (names.length ? ` \u00b7 ${this._t("history_mentioned")} ${names.join(", ")}` : "");
+      return { icon: "\u{1F4AC}", text };
+    }
+    if (entry.action === "sub_task") {
+      const key = { added: "history_sub_added", completed: "history_sub_completed",
+        reopened: "history_sub_reopened", deleted: "history_sub_deleted" }[entry.op];
+      return { icon: "\u2611", text: (key ? this._t(key) : "") + (entry.title ? `: ${entry.title}` : "") };
+    }
+    if (entry.action === "moved") {
+      return { icon: "\u21c4", text: this._t("history_moved", entry.from_list || "") };
     }
     return { icon: "\u2022", text: "" };
   }
 
-  _formatHistoryUpdateText(entry) {
+  _formatHistoryUpdateText(entry, colIdx) {
     const fieldNames = {
       title: this._t("hist_title"),
       due_date: this._t("due_date"),
@@ -8613,18 +9045,27 @@ class HomeTasksCard extends HTMLElement {
       tags: this._t("tags"),
       notes: this._t("notes"),
       recurrence_enabled: this._t("recurrence"),
+      section_id: this._t("hist_section"),
     };
     const lbl = fieldNames[entry.field] || entry.field;
     if (entry.field === "recurrence_enabled") {
       return `${lbl}: ${entry.to ? this._t("recurrence_enabled") : this._t("history_disabled")}`;
     }
     if (entry.from !== undefined || entry.to !== undefined) {
-      return `${lbl}: ${this._formatHistoryValue(entry.from, entry.field)} \u2192 ${this._formatHistoryValue(entry.to, entry.field)}`;
+      const fmt = (v) => this._formatHistoryValue(v, entry.field, colIdx);
+      return `${lbl}: ${fmt(entry.from)} \u2192 ${fmt(entry.to)}`;
     }
     return `${lbl} ${this._t("history_changed")}`;
   }
 
-  _formatHistoryValue(v, field) {
+  _formatHistoryValue(v, field, colIdx) {
+    if (field === "section_id") {
+      // A null section is the "No section" lane; an id the list no longer has
+      // was deleted since.
+      if (v == null) return this._t("board_no_section");
+      const sec = (this._columns[colIdx]?.sections || []).find((s) => s.id === v);
+      return sec ? sec.name : this._t("hist_section_deleted");
+    }
     if (v == null) return "\u2013";
     if (field === "priority") {
       return [this._t("pri_low"), this._t("pri_medium"), this._t("pri_high")][v - 1] || String(v);
@@ -9709,6 +10150,71 @@ class HomeTasksCard extends HTMLElement {
         font-size: 13px; padding: 6px 0; text-align: left; font-family: inherit;
       }
       .add-sub-btn:hover { text-decoration: underline; }
+      .comment-badge {
+        font-size: 11px; padding: 2px 8px; border-radius: 10px;
+        background: var(--todo-surface); color: var(--todo-secondary-text); font-weight: 500;
+      }
+      .comment-badge.badge-mention-me {
+        background: color-mix(in srgb, var(--todo-primary) 22%, transparent); color: var(--todo-primary); font-weight: 600;
+      }
+      .comment-list { display: flex; flex-direction: column; gap: 10px; }
+      .comment-list:empty { display: none; }
+      .comment { display: flex; gap: 8px; align-items: flex-start; }
+      .comment > .person-avatar { width: 28px; height: 28px; font-size: 12px; margin-top: 1px; }
+      .comment-main { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px; }
+      .comment-head { display: flex; align-items: baseline; flex-wrap: wrap; gap: 4px 8px; font-size: 12px; }
+      .comment-author { font-weight: 600; color: var(--todo-text); }
+      .comment-ts { color: var(--todo-secondary-text); font-size: 11px; }
+      .comment-actions { margin-left: auto; display: inline-flex; gap: 2px; align-self: center; }
+      .comment-action {
+        background: none; border: none; cursor: pointer; padding: 2px 4px; border-radius: 4px; line-height: 1;
+        color: var(--todo-secondary-text); display: inline-flex; align-items: center;
+      }
+      .comment-action ha-icon { --mdc-icon-size: 16px; }
+      .comment-action:hover { color: var(--todo-primary); background: var(--todo-surface); }
+      .comment-delete-btn:hover { color: var(--todo-error); background: rgba(244, 67, 54, 0.15); }
+      .comment-text { font-size: 13px; line-height: 1.4; color: var(--todo-text); white-space: pre-wrap; overflow-wrap: anywhere; }
+      .comment-text a { color: var(--todo-primary); text-decoration: underline; cursor: pointer; }
+      .mention {
+        display: inline-block; padding: 0 5px; border-radius: 8px; font-weight: 500;
+        background: color-mix(in srgb, var(--todo-primary) 14%, transparent); color: var(--todo-primary);
+      }
+      .mention.mention-me { background: color-mix(in srgb, var(--todo-primary) 32%, transparent); font-weight: 700; }
+      .mention.mention-removed { background: var(--todo-surface); color: var(--todo-secondary-text); text-decoration: line-through; }
+      .comment-compose { display: flex; gap: 6px; align-items: flex-end; }
+      .comment-input-wrap { position: relative; flex: 1; min-width: 0; }
+      .comment-input {
+        width: 100%; box-sizing: border-box; padding: 8px 10px; min-height: 36px; resize: none;
+        border: 1px solid var(--outline-color, var(--divider-color, rgba(255,255,255,0.12))); border-radius: 4px;
+        background: var(--mdc-text-field-fill-color, var(--input-fill-color, var(--todo-bg)));
+        color: var(--todo-text); font-family: inherit; font-size: 13px; line-height: 1.4; outline: none;
+      }
+      .comment-input:focus { border-color: var(--todo-primary); box-shadow: 0 0 0 1px var(--todo-primary); }
+      .comment-send {
+        flex-shrink: 0; width: 36px; height: 36px; border-radius: 50%; border: none; cursor: pointer;
+        background: var(--todo-primary); color: var(--text-primary-color, #fff);
+        display: inline-flex; align-items: center; justify-content: center;
+      }
+      .comment-send ha-icon { --mdc-icon-size: 18px; }
+      .comment-error { color: var(--todo-error); font-size: 12px; }
+      .comment-error:empty { display: none; }
+      .comment-editor { display: flex; flex-direction: column; gap: 6px; }
+      .comment-edit-buttons { display: flex; gap: 8px; }
+      .comment-btn {
+        background: none; border: 1px solid var(--todo-divider); color: var(--todo-text);
+        padding: 4px 12px; border-radius: 4px; font-size: 12px; cursor: pointer; font-family: inherit;
+      }
+      .comment-btn.primary { background: var(--todo-primary); border-color: var(--todo-primary); color: var(--text-primary-color, #fff); }
+      .mention-picker {
+        position: absolute; left: 0; right: 0; top: calc(100% + 2px); z-index: 20;
+        max-height: 200px; overflow-y: auto; box-sizing: border-box;
+        background: var(--card-background-color, var(--todo-bg)); border: 1px solid var(--todo-divider);
+        border-radius: 6px; box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
+      }
+      .mention-picker.above { top: auto; bottom: calc(100% + 2px); }
+      .mention-option { display: flex; align-items: center; gap: 8px; padding: 6px 10px; min-height: 22px; font-size: 13px; cursor: pointer; color: var(--todo-text); }
+      .mention-option .person-avatar { width: 22px; height: 22px; font-size: 10px; }
+      .mention-option.active, .mention-option:hover { background: color-mix(in srgb, var(--todo-primary) 16%, transparent); }
       .history-list { display: flex; flex-direction: column; gap: 0; max-height: 220px; overflow-y: auto; }
       .history-entry { display: grid; grid-template-columns: 18px 1fr auto; align-items: baseline; gap: 6px; padding: 5px 14px 5px 0; border-bottom: 1px solid var(--divider-color, rgba(128,128,128,0.15)); font-size: 12px; }
       .history-entry:last-child { border-bottom: none; }
@@ -11545,6 +12051,7 @@ class HomeTasksCardEditor extends HTMLElement {
           makeToggle("badge-recurrence", "ed_badge_recurrence", "badge_recurrence", true),
           makeToggle("badge-tags", "ed_badge_tags", "badge_tags", true),
           makeToggle("badge-reminders", "ed_badge_reminders", "badge_reminders", true),
+          makeToggle("badge-comments", "ed_badge_comments", "badge_comments", true),
           makeToggle("auto-delete", "ed_auto_delete", "auto_delete_completed", false),
           makeToggle("confirm-complete", "ed_confirm_complete", "confirm_complete", false),
           makeToggle("confirm-delete", "ed_confirm_delete", "confirm_delete", true),
@@ -11589,7 +12096,8 @@ class HomeTasksCardEditor extends HTMLElement {
           makeToggle("show-due-date", "ed_show_due_date", "show_due_date", true),
           makeToggle("show-reminders", "ed_show_reminders", "show_reminders", true),
           makeToggle("show-recurrence", "ed_show_recurrence", "show_recurrence", true),
-          makeToggle("show-history", "ed_show_history", "show_history", false),
+          makeToggle("show-history", "ed_show_history", "show_history", col.view_mode === "board"),
+          makeToggle("show-comments", "ed_show_comments", "show_comments", true),
           makeToggle("show-move", "ed_show_move", "show_move", true),
         ]),
       ]),

@@ -50,6 +50,7 @@ test("recent feature keys are translated in every language", () => {
     "new_board", "ed_tab_add",
     "person_unassigned", "ed_show_unassigned_filter",
     "confirm_delete_task_msg", "ed_confirm_delete",
+    "comments", "history_commented",
   ];
   for (const lang of Object.keys(t)) {
     for (const key of required) {
