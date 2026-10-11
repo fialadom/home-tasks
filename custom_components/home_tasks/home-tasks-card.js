@@ -71,6 +71,7 @@ const _TRANSLATIONS = {
     ed_show_person: "Assignees",
     ed_auto_delete: "Delete completed immediately",
     ed_confirm_complete: "Confirm before completing", ed_tap_to_complete: "Tap row to complete",
+    ed_confirm_delete: "Confirm before deleting",
     ed_show_add_due: "Due date when adding",
     ed_max_height: "Max height (px, 0 = unlimited)", ed_badge_priority: "Priority chips", ed_badge_progress: "Progress chips", ed_badge_due: "Due chips", ed_badge_recurrence: "Recurrence chips", ed_badge_person: "Person", ed_badge_tags: "Tag chips", ed_badge_reminders: "Reminder chips",
     ed_sec_defaults: "Defaults",
@@ -87,6 +88,8 @@ const _TRANSLATIONS = {
     ed_defaults_hint: "Applied to every new task in this list \u2014 no matter how it is created (card, service, voice, todo). Changes are saved immediately.", ed_defaults_saved: "Saved", ed_defaults_load_failed: "Could not load defaults", ed_defaults_save_failed: "Save failed",
     confirm_complete_msg: "Mark \"{0}\" as completed?",
     confirm_complete_ok: "Complete",
+    confirm_delete_task_msg: "Delete \"{0}\"? This can't be undone.",
+    confirm_delete_task_ok: "Delete",
     ed_compact: "Compact",
     ed_show_tags: "Tags",
     ed_hint: "New lists can be created under Settings \u2192 Integrations \u2192 Home Tasks.",
@@ -233,6 +236,7 @@ const _TRANSLATIONS = {
     ed_show_sub_items: "Subtaken", ed_show_person: "Personen",
     ed_auto_delete: "Voltooide meteen verwijderen", ed_compact: "Compact", ed_show_tags: "Tags",
     ed_confirm_complete: "Bevestigen voor afronden", ed_tap_to_complete: "Tik op rij om af te ronden",
+    ed_confirm_delete: "Bevestigen v\u00f3\u00f3r verwijderen",
     ed_show_add_due: "Vervaldatum bij toevoegen",
     ed_max_height: "Max. hoogte (px, 0 = onbeperkt)", ed_badge_priority: "Prioriteitschips", ed_badge_progress: "Voortgangschips", ed_badge_due: "Vervaldatumchips", ed_badge_recurrence: "Herhalingschips", ed_badge_person: "Persoon", ed_badge_tags: "Tagchips", ed_badge_reminders: "Herinneringschips",
     ed_sec_defaults: "Standaardwaarden",
@@ -249,6 +253,8 @@ const _TRANSLATIONS = {
     ed_defaults_hint: "Geldt voor elke nieuwe taak in deze lijst \u2014 ongeacht hoe die wordt aangemaakt. Wijzigingen worden direct opgeslagen.", ed_defaults_saved: "Opgeslagen", ed_defaults_load_failed: "Standaardwaarden konden niet worden geladen", ed_defaults_save_failed: "Opslaan mislukt",
     confirm_complete_msg: "\u201e{0}\u201d als afgerond markeren?",
     confirm_complete_ok: "Afronden",
+    confirm_delete_task_msg: "Taak \u201e{0}\u201d verwijderen? Dit kan niet ongedaan worden gemaakt.",
+    confirm_delete_task_ok: "Verwijderen",
     ed_hint: "Nieuwe lijsten kunnen worden aangemaakt via Instellingen \u2192 Integraties \u2192 Home Tasks.",
     tags: "Tags", add_tag: "+ Tag toevoegen", tag_placeholder: "Nieuwe tag...", remove_tag: "Verwijderen", tag_suggestions_label: "Bestaande tags", tag_no_matches: "Geen overeenkomende tags",
     new_sub_item: "Nieuwe subtaak", remove_reminder: "Herinnering verwijderen",
@@ -335,6 +341,7 @@ const _TRANSLATIONS = {
     ed_show_sub_items: "Sotto-attivit\u00e0", ed_show_person: "Persone",
     ed_auto_delete: "Elimina completate immediatamente", ed_compact: "Compatto", ed_show_tags: "Tag",
     ed_confirm_complete: "Conferma prima di completare", ed_tap_to_complete: "Tocca la riga per completare",
+    ed_confirm_delete: "Conferma prima di eliminare",
     ed_show_add_due: "Scadenza alla creazione",
     ed_max_height: "Altezza max (px, 0 = illimitata)", ed_badge_priority: "Chip priorit\u00e0", ed_badge_progress: "Chip avanzamento", ed_badge_due: "Chip scadenza", ed_badge_recurrence: "Chip ricorrenza", ed_badge_person: "Persona", ed_badge_tags: "Chip tag", ed_badge_reminders: "Chip promemoria",
     ed_sec_defaults: "Predefiniti",
@@ -351,6 +358,8 @@ const _TRANSLATIONS = {
     ed_defaults_hint: "Si applica a ogni nuova attivit\u00e0 di questo elenco, comunque venga creata. Le modifiche vengono salvate immediatamente.", ed_defaults_saved: "Salvato", ed_defaults_load_failed: "Impossibile caricare i valori predefiniti", ed_defaults_save_failed: "Salvataggio non riuscito",
     confirm_complete_msg: "Segnare \u201c{0}\u201d come completata?",
     confirm_complete_ok: "Completa",
+    confirm_delete_task_msg: "Eliminare \u201c{0}\u201d? Questa azione non pu\u00f2 essere annullata.",
+    confirm_delete_task_ok: "Elimina",
     ed_hint: "Nuove liste possono essere create in Impostazioni \u2192 Integrazioni \u2192 Home Tasks.",
     tags: "Tag", add_tag: "+ Aggiungi tag", tag_placeholder: "Nuovo tag...", remove_tag: "Rimuovi", tag_suggestions_label: "Tag esistenti", tag_no_matches: "Nessun tag corrispondente",
     new_sub_item: "Nuova sotto-attivit\u00e0", remove_reminder: "Rimuovi promemoria",
@@ -437,6 +446,7 @@ const _TRANSLATIONS = {
     ed_show_sub_items: "Podzadania", ed_show_person: "Osoby",
     ed_auto_delete: "Natychmiast usu\u0144 uko\u0144czone", ed_compact: "Kompaktowy", ed_show_tags: "Tagi",
     ed_confirm_complete: "Potwierd\u017a przed uko\u0144czeniem", ed_tap_to_complete: "Dotknij wiersz, aby ukończyć",
+    ed_confirm_delete: "Potwierd\u017a przed usuni\u0119ciem",
     ed_show_add_due: "Termin przy dodawaniu",
     ed_max_height: "Maks. wysoko\u015b\u0107 (px, 0 = bez limitu)", ed_badge_priority: "Znaczniki priorytetu", ed_badge_progress: "Znaczniki post\u0119pu", ed_badge_due: "Znaczniki terminu", ed_badge_recurrence: "Znaczniki powtarzania", ed_badge_person: "Osoba", ed_badge_tags: "Znaczniki tag\u00f3w", ed_badge_reminders: "Znaczniki przypomnie\u0144",
     ed_sec_defaults: "Domy\u015blne",
@@ -453,6 +463,8 @@ const _TRANSLATIONS = {
     ed_defaults_hint: "Dotyczy ka\u017cdego nowego zadania na tej li\u015bcie \u2014 niezale\u017cnie od sposobu utworzenia. Zmiany s\u0105 zapisywane natychmiast.", ed_defaults_saved: "Zapisano", ed_defaults_load_failed: "Nie uda\u0142o si\u0119 wczyta\u0107 ustawie\u0144 domy\u015blnych", ed_defaults_save_failed: "Zapis nie powi\u00f3d\u0142 si\u0119",
     confirm_complete_msg: "Oznaczy\u0107 \u201e{0}\u201d jako uko\u0144czone?",
     confirm_complete_ok: "Uko\u0144cz",
+    confirm_delete_task_msg: "Usun\u0105\u0107 \u201e{0}\u201d? Tej operacji nie mo\u017cna cofn\u0105\u0107.",
+    confirm_delete_task_ok: "Usu\u0144",
     ed_hint: "Nowe listy mo\u017cna tworzy\u0107 w Ustawienia \u2192 Integracje \u2192 Home Tasks.",
     tags: "Tagi", add_tag: "+ Dodaj tag", tag_placeholder: "Nowy tag...", remove_tag: "Usu\u0144", tag_suggestions_label: "Istniej\u0105ce tagi", tag_no_matches: "Brak pasuj\u0105cych tag\u00f3w",
     new_sub_item: "Nowe podzadanie", remove_reminder: "Usu\u0144 przypomnienie",
@@ -539,6 +551,7 @@ const _TRANSLATIONS = {
     ed_show_sub_items: "Deluppgifter", ed_show_person: "Personer",
     ed_auto_delete: "Ta bort slutf\u00f6rda omedelbart", ed_compact: "Kompakt", ed_show_tags: "Taggar",
     ed_confirm_complete: "Bekr\u00e4fta innan slutf\u00f6rande", ed_tap_to_complete: "Tryck på raden för att slutföra",
+    ed_confirm_delete: "Bekr\u00e4fta innan borttagning",
     ed_show_add_due: "F\u00f6rfallodatum vid till\u00e4gg",
     ed_max_height: "Maxh\u00f6jd (px, 0 = obegr\u00e4nsad)", ed_badge_priority: "Prioritetschips", ed_badge_progress: "F\u00f6rloppschips", ed_badge_due: "F\u00f6rfallochips", ed_badge_recurrence: "Upprepningschips", ed_badge_person: "Person", ed_badge_tags: "Taggchips", ed_badge_reminders: "P\u00e5minnelsechips",
     ed_sec_defaults: "Standardv\u00e4rden",
@@ -555,6 +568,8 @@ const _TRANSLATIONS = {
     ed_defaults_hint: "G\u00e4ller varje ny uppgift i listan \u2014 oavsett hur den skapas. \u00c4ndringar sparas direkt.", ed_defaults_saved: "Sparat", ed_defaults_load_failed: "Det gick inte att l\u00e4sa in standardv\u00e4rdena", ed_defaults_save_failed: "Det gick inte att spara",
     confirm_complete_msg: "Markera \u201d{0}\u201d som slutf\u00f6rd?",
     confirm_complete_ok: "Slutf\u00f6r",
+    confirm_delete_task_msg: "Ta bort \u201d{0}\u201d? Det g\u00e5r inte att \u00e5ngra.",
+    confirm_delete_task_ok: "Ta bort",
     ed_hint: "Nya listor kan skapas under Inst\u00e4llningar \u2192 Integrationer \u2192 Home Tasks.",
     tags: "Taggar", add_tag: "+ L\u00e4gg till tagg", tag_placeholder: "Ny tagg...", remove_tag: "Ta bort", tag_suggestions_label: "Befintliga taggar", tag_no_matches: "Inga matchande taggar",
     new_sub_item: "Ny deluppgift", remove_reminder: "Ta bort p\u00e5minnelse",
@@ -641,6 +656,7 @@ const _TRANSLATIONS = {
     ed_show_sub_items: "Sous-t\u00e2ches", ed_show_person: "Personnes",
     ed_auto_delete: "Supprimer les termin\u00e9es imm\u00e9diatement", ed_compact: "Compact", ed_show_tags: "\u00c9tiquettes",
     ed_confirm_complete: "Confirmer avant de terminer", ed_tap_to_complete: "Toucher la ligne pour terminer",
+    ed_confirm_delete: "Confirmer avant de supprimer",
     ed_show_add_due: "\u00c9ch\u00e9ance \u00e0 la cr\u00e9ation",
     ed_max_height: "Hauteur max (px, 0 = illimit\u00e9e)", ed_badge_priority: "Puces priorit\u00e9", ed_badge_progress: "Puces progression", ed_badge_due: "Puces \u00e9ch\u00e9ance", ed_badge_recurrence: "Puces r\u00e9currence", ed_badge_person: "Personne", ed_badge_tags: "Puces \u00e9tiquettes", ed_badge_reminders: "Puces rappel",
     ed_sec_defaults: "Valeurs par d\u00e9faut",
@@ -657,6 +673,8 @@ const _TRANSLATIONS = {
     ed_defaults_hint: "S'applique \u00e0 chaque nouvelle t\u00e2che de cette liste, quelle que soit sa cr\u00e9ation. Les modifications sont enregistr\u00e9es imm\u00e9diatement.", ed_defaults_saved: "Enregistr\u00e9", ed_defaults_load_failed: "Impossible de charger les valeurs par d\u00e9faut", ed_defaults_save_failed: "\u00c9chec de l'enregistrement",
     confirm_complete_msg: "Marquer \u00ab\u202f{0}\u202f\u00bb comme termin\u00e9e\u202f?",
     confirm_complete_ok: "Terminer",
+    confirm_delete_task_msg: "Supprimer \u00ab\u202f{0}\u202f\u00bb\u202f? Cette action est irr\u00e9versible.",
+    confirm_delete_task_ok: "Supprimer",
     ed_hint: "De nouvelles listes peuvent \u00eatre cr\u00e9\u00e9es dans Param\u00e8tres \u2192 Int\u00e9grations \u2192 Home Tasks.",
     tags: "\u00c9tiquettes", add_tag: "+ Ajouter une \u00e9tiquette", tag_placeholder: "Nouvelle \u00e9tiquette...", remove_tag: "Supprimer", tag_suggestions_label: "\u00c9tiquettes existantes", tag_no_matches: "Aucune \u00e9tiquette correspondante",
     new_sub_item: "Nouvelle sous-t\u00e2che", remove_reminder: "Supprimer le rappel",
@@ -743,6 +761,7 @@ const _TRANSLATIONS = {
     ed_show_sub_items: "Subtarefas", ed_show_person: "Pessoas",
     ed_auto_delete: "Excluir conclu\u00eddas imediatamente", ed_compact: "Compacto", ed_show_tags: "Etiquetas",
     ed_confirm_complete: "Confirmar antes de concluir", ed_tap_to_complete: "Toque na linha para concluir",
+    ed_confirm_delete: "Confirmar antes de excluir",
     ed_show_add_due: "Prazo ao adicionar",
     ed_max_height: "Altura m\u00e1x. (px, 0 = ilimitada)", ed_badge_priority: "Chips de prioridade", ed_badge_progress: "Chips de progresso", ed_badge_due: "Chips de prazo", ed_badge_recurrence: "Chips de recorr\u00eancia", ed_badge_person: "Pessoa", ed_badge_tags: "Chips de etiquetas", ed_badge_reminders: "Chips de lembrete",
     ed_sec_defaults: "Padr\u00f5es",
@@ -759,6 +778,8 @@ const _TRANSLATIONS = {
     ed_defaults_hint: "Aplica-se a cada nova tarefa desta lista, seja como for criada. As altera\u00e7\u00f5es s\u00e3o guardadas imediatamente.", ed_defaults_saved: "Guardado", ed_defaults_load_failed: "N\u00e3o foi poss\u00edvel carregar as predefini\u00e7\u00f5es", ed_defaults_save_failed: "Falha ao guardar",
     confirm_complete_msg: "Marcar \u201c{0}\u201d como conclu\u00edda?",
     confirm_complete_ok: "Concluir",
+    confirm_delete_task_msg: "Excluir \u201c{0}\u201d? Esta a\u00e7\u00e3o n\u00e3o pode ser desfeita.",
+    confirm_delete_task_ok: "Excluir",
     ed_hint: "Novas listas podem ser criadas em Configura\u00e7\u00f5es \u2192 Integra\u00e7\u00f5es \u2192 Home Tasks.",
     tags: "Etiquetas", add_tag: "+ Adicionar etiqueta", tag_placeholder: "Nova etiqueta...", remove_tag: "Remover", tag_suggestions_label: "Etiquetas existentes", tag_no_matches: "Nenhuma etiqueta correspondente",
     new_sub_item: "Nova subtarefa", remove_reminder: "Remover lembrete",
@@ -845,6 +866,7 @@ const _TRANSLATIONS = {
     ed_show_sub_items: "Subtareas", ed_show_person: "Personas",
     ed_auto_delete: "Eliminar completadas inmediatamente", ed_compact: "Compacto", ed_show_tags: "Etiquetas",
     ed_confirm_complete: "Confirmar antes de completar", ed_tap_to_complete: "Toca la fila para completar",
+    ed_confirm_delete: "Confirmar antes de eliminar",
     ed_show_add_due: "Fecha l\u00edmite al a\u00f1adir",
     ed_max_height: "Altura m\u00e1x. (px, 0 = ilimitada)", ed_badge_priority: "Chips de prioridad", ed_badge_progress: "Chips de progreso", ed_badge_due: "Chips de vencimiento", ed_badge_recurrence: "Chips de repetici\u00f3n", ed_badge_person: "Persona", ed_badge_tags: "Chips de etiquetas", ed_badge_reminders: "Chips de recordatorio",
     ed_sec_defaults: "Predeterminados",
@@ -861,6 +883,8 @@ const _TRANSLATIONS = {
     ed_defaults_hint: "Se aplica a cada nueva tarea de esta lista, sin importar c\u00f3mo se cree. Los cambios se guardan inmediatamente.", ed_defaults_saved: "Guardado", ed_defaults_load_failed: "No se pudieron cargar los valores predeterminados", ed_defaults_save_failed: "Error al guardar",
     confirm_complete_msg: "\u00bfMarcar \u00ab{0}\u00bb como completada?",
     confirm_complete_ok: "Completar",
+    confirm_delete_task_msg: "\u00bfEliminar \u00ab{0}\u00bb? Esta acci\u00f3n no se puede deshacer.",
+    confirm_delete_task_ok: "Eliminar",
     ed_hint: "Se pueden crear nuevas listas en Configuraci\u00f3n \u2192 Integraciones \u2192 Home Tasks.",
     tags: "Etiquetas", add_tag: "+ A\u00f1adir etiqueta", tag_placeholder: "Nueva etiqueta...", remove_tag: "Eliminar", tag_suggestions_label: "Etiquetas existentes", tag_no_matches: "No hay etiquetas coincidentes",
     new_sub_item: "Nueva subtarea", remove_reminder: "Eliminar recordatorio",
@@ -947,6 +971,7 @@ const _TRANSLATIONS = {
     ed_show_sub_items: "\u041f\u043e\u0434\u0437\u0430\u0434\u0430\u0447\u0438", ed_show_person: "\u0418\u0441\u043f\u043e\u043b\u043d\u0438\u0442\u0435\u043b\u0438",
     ed_auto_delete: "\u0421\u0440\u0430\u0437\u0443 \u0443\u0434\u0430\u043b\u044f\u0442\u044c \u0432\u044b\u043f\u043e\u043b\u043d\u0435\u043d\u043d\u044b\u0435", ed_compact: "\u041a\u043e\u043c\u043f\u0430\u043a\u0442\u043d\u044b\u0439", ed_show_tags: "\u0422\u0435\u0433\u0438",
     ed_confirm_complete: "\u041f\u043e\u0434\u0442\u0432\u0435\u0440\u0436\u0434\u0430\u0442\u044c \u043f\u0435\u0440\u0435\u0434 \u0437\u0430\u0432\u0435\u0440\u0448\u0435\u043d\u0438\u0435\u043c", ed_tap_to_complete: "\u041d\u0430\u0436\u0430\u0442\u0438\u0435 \u043d\u0430 \u0441\u0442\u0440\u043e\u043a\u0443 \u0437\u0430\u0432\u0435\u0440\u0448\u0430\u0435\u0442",
+    ed_confirm_delete: "\u041f\u043e\u0434\u0442\u0432\u0435\u0440\u0436\u0434\u0430\u0442\u044c \u043f\u0435\u0440\u0435\u0434 \u0443\u0434\u0430\u043b\u0435\u043d\u0438\u0435\u043c",
     ed_show_add_due: "\u0421\u0440\u043e\u043a \u043f\u0440\u0438 \u0434\u043e\u0431\u0430\u0432\u043b\u0435\u043d\u0438\u0438",
     ed_max_height: "\u041c\u0430\u043a\u0441. \u0432\u044b\u0441\u043e\u0442\u0430 (px, 0 = \u0431\u0435\u0437 \u043e\u0433\u0440\u0430\u043d\u0438\u0447\u0435\u043d\u0438\u044f)", ed_badge_priority: "\u0427\u0438\u043f\u044b \u043f\u0440\u0438\u043e\u0440\u0438\u0442\u0435\u0442\u0430", ed_badge_progress: "\u0427\u0438\u043f\u044b \u043f\u0440\u043e\u0433\u0440\u0435\u0441\u0441\u0430", ed_badge_due: "\u0427\u0438\u043f\u044b \u0441\u0440\u043e\u043a\u0430", ed_badge_recurrence: "\u0427\u0438\u043f\u044b \u043f\u043e\u0432\u0442\u043e\u0440\u0435\u043d\u0438\u044f", ed_badge_person: "Человек", ed_badge_tags: "\u0427\u0438\u043f\u044b \u0442\u0435\u0433\u043e\u0432", ed_badge_reminders: "\u0427\u0438\u043f\u044b \u043d\u0430\u043f\u043e\u043c\u0438\u043d\u0430\u043d\u0438\u0439",
     ed_sec_defaults: "\u0417\u043d\u0430\u0447\u0435\u043d\u0438\u044f \u043f\u043e \u0443\u043c\u043e\u043b\u0447\u0430\u043d\u0438\u044e",
@@ -963,6 +988,8 @@ const _TRANSLATIONS = {
     ed_defaults_hint: "\u041f\u0440\u0438\u043c\u0435\u043d\u044f\u0435\u0442\u0441\u044f \u043a \u043a\u0430\u0436\u0434\u043e\u0439 \u043d\u043e\u0432\u043e\u0439 \u0437\u0430\u0434\u0430\u0447\u0435 \u044d\u0442\u043e\u0433\u043e \u0441\u043f\u0438\u0441\u043a\u0430. \u0418\u0437\u043c\u0435\u043d\u0435\u043d\u0438\u044f \u0441\u043e\u0445\u0440\u0430\u043d\u044f\u044e\u0442\u0441\u044f \u0441\u0440\u0430\u0437\u0443.", ed_defaults_saved: "\u0421\u043e\u0445\u0440\u0430\u043d\u0435\u043d\u043e", ed_defaults_load_failed: "\u041d\u0435 \u0443\u0434\u0430\u043b\u043e\u0441\u044c \u0437\u0430\u0433\u0440\u0443\u0437\u0438\u0442\u044c \u0437\u043d\u0430\u0447\u0435\u043d\u0438\u044f \u043f\u043e \u0443\u043c\u043e\u043b\u0447\u0430\u043d\u0438\u044e", ed_defaults_save_failed: "\u041d\u0435 \u0443\u0434\u0430\u043b\u043e\u0441\u044c \u0441\u043e\u0445\u0440\u0430\u043d\u0438\u0442\u044c",
     confirm_complete_msg: "\u041e\u0442\u043c\u0435\u0442\u0438\u0442\u044c \u00ab{0}\u00bb \u043a\u0430\u043a \u0432\u044b\u043f\u043e\u043b\u043d\u0435\u043d\u043d\u0443\u044e?",
     confirm_complete_ok: "\u0412\u044b\u043f\u043e\u043b\u043d\u0438\u0442\u044c",
+    confirm_delete_task_msg: "\u0423\u0434\u0430\u043b\u0438\u0442\u044c \u00ab{0}\u00bb? \u042d\u0442\u043e \u0434\u0435\u0439\u0441\u0442\u0432\u0438\u0435 \u043d\u0435\u043b\u044c\u0437\u044f \u043e\u0442\u043c\u0435\u043d\u0438\u0442\u044c.",
+    confirm_delete_task_ok: "\u0423\u0434\u0430\u043b\u0438\u0442\u044c",
     ed_hint: "\u041d\u043e\u0432\u044b\u0435 \u0441\u043f\u0438\u0441\u043a\u0438 \u043c\u043e\u0436\u043d\u043e \u0441\u043e\u0437\u0434\u0430\u0442\u044c \u0432 \u041d\u0430\u0441\u0442\u0440\u043e\u0439\u043a\u0438 \u2192 \u0418\u043d\u0442\u0435\u0433\u0440\u0430\u0446\u0438\u0438 \u2192 Home Tasks.",
     tags: "\u0422\u0435\u0433\u0438", add_tag: "+ \u0414\u043e\u0431\u0430\u0432\u0438\u0442\u044c \u0442\u0435\u0433", tag_placeholder: "\u041d\u043e\u0432\u044b\u0439 \u0442\u0435\u0433...", remove_tag: "\u0423\u0434\u0430\u043b\u0438\u0442\u044c", tag_suggestions_label: "\u0421\u0443\u0449\u0435\u0441\u0442\u0432\u0443\u044e\u0449\u0438\u0435 \u0442\u0435\u0433\u0438", tag_no_matches: "\u041d\u0435\u0442 \u0441\u043e\u0432\u043f\u0430\u0434\u0430\u044e\u0449\u0438\u0445 \u0442\u0435\u0433\u043e\u0432",
     new_sub_item: "\u041d\u043e\u0432\u0430\u044f \u043f\u043e\u0434\u0437\u0430\u0434\u0430\u0447\u0430", remove_reminder: "\u0423\u0434\u0430\u043b\u0438\u0442\u044c \u043d\u0430\u043f\u043e\u043c\u0438\u043d\u0430\u043d\u0438\u0435",
@@ -1049,6 +1076,7 @@ const _TRANSLATIONS = {
     ed_show_sub_items: "Pod\u00fakoly", ed_show_person: "Osoby",
     ed_auto_delete: "Okam\u017eit\u011b smazat dokon\u010den\u00e9", ed_compact: "Kompaktn\u00ed", ed_show_tags: "\u0160t\u00edtky",
     ed_confirm_complete: "Potvrdit p\u0159ed dokon\u010den\u00edm", ed_tap_to_complete: "Klepnutím na řádek dokončit",
+    ed_confirm_delete: "Potvrdit p\u0159ed smaz\u00e1n\u00edm",
     ed_show_add_due: "Term\u00edn p\u0159i p\u0159id\u00e1n\u00ed",
     ed_max_height: "Max. v\u00fd\u0161ka (px, 0 = bez limitu)", ed_badge_priority: "\u010cipy priority", ed_badge_progress: "\u010cipy pr\u016fb\u011bhu", ed_badge_due: "\u010cipy term\u00ednu", ed_badge_recurrence: "\u010cipy opakov\u00e1n\u00ed", ed_badge_person: "Osoba", ed_badge_tags: "\u010cipy \u0161t\u00edtk\u016f", ed_badge_reminders: "\u010cipy p\u0159ipomenut\u00ed",
     ed_sec_defaults: "V\u00fdchoz\u00ed hodnoty",
@@ -1065,6 +1093,8 @@ const _TRANSLATIONS = {
     ed_defaults_hint: "Plat\u00ed pro ka\u017ed\u00fd nov\u00fd \u00fakol v tomto seznamu. Zm\u011bny se ukl\u00e1daj\u00ed okam\u017eit\u011b.", ed_defaults_saved: "Ulo\u017eeno", ed_defaults_load_failed: "V\u00fdchoz\u00ed hodnoty se nepoda\u0159ilo na\u010d\u00edst", ed_defaults_save_failed: "Ulo\u017een\u00ed se nezda\u0159ilo",
     confirm_complete_msg: "Ozna\u010dit \u201e{0}\u201c jako dokon\u010den\u00e9?",
     confirm_complete_ok: "Dokon\u010dit",
+    confirm_delete_task_msg: "Smazat \u00fakol \u201e{0}\u201c? Tuto akci nelze vr\u00e1tit.",
+    confirm_delete_task_ok: "Smazat",
     ed_hint: "Nov\u00e9 seznamy lze vytvo\u0159it v Nastaven\u00ed \u2192 Integrace \u2192 Home Tasks.",
     tags: "\u0160t\u00edtky", add_tag: "+ P\u0159idat \u0161t\u00edtek", tag_placeholder: "Nov\u00fd \u0161t\u00edtek...", remove_tag: "Odebrat", tag_suggestions_label: "Existuj\u00edc\u00ed \u0161t\u00edtky", tag_no_matches: "\u017d\u00e1dn\u00e9 odpov\u00eddaj\u00edc\u00ed \u0161t\u00edtky",
     new_sub_item: "Nov\u00fd pod\u00fakol", remove_reminder: "Odebrat p\u0159ipom\u00ednku",
@@ -1151,6 +1181,7 @@ const _TRANSLATIONS = {
     ed_show_sub_items: "Delopgaver", ed_show_person: "Personer",
     ed_auto_delete: "Slet f\u00e6rdige \u00f8jeblikkeligt", ed_compact: "Kompakt", ed_show_tags: "Tags",
     ed_confirm_complete: "Bekr\u00e6ft f\u00f8r fuldf\u00f8relse", ed_tap_to_complete: "Tryk på rækken for at fuldføre",
+    ed_confirm_delete: "Bekr\u00e6ft f\u00f8r sletning",
     ed_show_add_due: "Forfaldsdato ved tilf\u00f8jelse",
     ed_max_height: "Maks. h\u00f8jde (px, 0 = ubegr\u00e6nset)", ed_badge_priority: "Prioritetschips", ed_badge_progress: "Fremdriftschips", ed_badge_due: "Forfaldschips", ed_badge_recurrence: "Gentagelseschips", ed_badge_person: "Person", ed_badge_tags: "Tagchips", ed_badge_reminders: "P\u00e5mindelseschips",
     ed_sec_defaults: "Standarder",
@@ -1167,6 +1198,8 @@ const _TRANSLATIONS = {
     ed_defaults_hint: "G\u00e6lder for hver ny opgave p\u00e5 listen \u2014 uanset hvordan den oprettes. \u00c6ndringer gemmes med det samme.", ed_defaults_saved: "Gemt", ed_defaults_load_failed: "Standardv\u00e6rdierne kunne ikke indl\u00e6ses", ed_defaults_save_failed: "Kunne ikke gemme",
     confirm_complete_msg: "Mark\u00e9r \u201d{0}\u201d som fuldf\u00f8rt?",
     confirm_complete_ok: "Fuldf\u00f8r",
+    confirm_delete_task_msg: "Slet \u201d{0}\u201d? Det kan ikke fortrydes.",
+    confirm_delete_task_ok: "Slet",
     ed_hint: "Nye lister kan oprettes under Indstillinger \u2192 Integrationer \u2192 Home Tasks.",
     tags: "Tags", add_tag: "+ Tilf\u00f8j tag", tag_placeholder: "Nyt tag...", remove_tag: "Fjern", tag_suggestions_label: "Eksisterende tags", tag_no_matches: "Ingen matchende tags",
     new_sub_item: "Ny delopgave", remove_reminder: "Fjern p\u00e5mindelse",
@@ -1253,6 +1286,7 @@ const _TRANSLATIONS = {
     ed_show_sub_items: "Deloppgaver", ed_show_person: "Personer",
     ed_auto_delete: "Slett ferdige umiddelbart", ed_compact: "Kompakt", ed_show_tags: "Tagger",
     ed_confirm_complete: "Bekreft f\u00f8r fullf\u00f8ring", ed_tap_to_complete: "Trykk på raden for å fullføre",
+    ed_confirm_delete: "Bekreft f\u00f8r sletting",
     ed_show_add_due: "Forfallsdato ved tillegg",
     ed_max_height: "Maks. h\u00f8yde (px, 0 = ubegrenset)", ed_badge_priority: "Prioritetschips", ed_badge_progress: "Fremdriftschips", ed_badge_due: "Forfallschips", ed_badge_recurrence: "Gjentakelseschips", ed_badge_person: "Person", ed_badge_tags: "Taggchips", ed_badge_reminders: "P\u00e5minnelseschips",
     ed_sec_defaults: "Standarder",
@@ -1269,6 +1303,8 @@ const _TRANSLATIONS = {
     ed_defaults_hint: "Gjelder hver ny oppgave i listen \u2014 uansett hvordan den opprettes. Endringer lagres umiddelbart.", ed_defaults_saved: "Lagret", ed_defaults_load_failed: "Kunne ikke laste standardverdiene", ed_defaults_save_failed: "Kunne ikke lagre",
     confirm_complete_msg: "Merke \u00ab{0}\u00bb som fullf\u00f8rt?",
     confirm_complete_ok: "Fullf\u00f8r",
+    confirm_delete_task_msg: "Slette \u00ab{0}\u00bb? Dette kan ikke angres.",
+    confirm_delete_task_ok: "Slett",
     ed_hint: "Nye lister kan opprettes under Innstillinger \u2192 Integrasjoner \u2192 Home Tasks.",
     tags: "Tagger", add_tag: "+ Legg til tagg", tag_placeholder: "Ny tagg...", remove_tag: "Fjern", tag_suggestions_label: "Eksisterende tagger", tag_no_matches: "Ingen samsvarende tagger",
     new_sub_item: "Ny deloppgave", remove_reminder: "Fjern p\u00e5minnelse",
@@ -1355,6 +1391,7 @@ const _TRANSLATIONS = {
     ed_show_sub_items: "Aliteht\u00e4v\u00e4t", ed_show_person: "Henkil\u00f6t",
     ed_auto_delete: "Poista valmiit v\u00e4litt\u00f6m\u00e4sti", ed_compact: "Kompakti", ed_show_tags: "Tunnisteet",
     ed_confirm_complete: "Vahvista ennen valmiiksi merkitsemist\u00e4", ed_tap_to_complete: "Merkitse valmiiksi napauttamalla riviä",
+    ed_confirm_delete: "Vahvista ennen poistamista",
     ed_show_add_due: "Er\u00e4p\u00e4iv\u00e4 lis\u00e4tt\u00e4ess\u00e4",
     ed_max_height: "Enimm\u00e4iskorkeus (px, 0 = rajaton)", ed_badge_priority: "Prioriteettimerkit", ed_badge_progress: "Edistymismerkit", ed_badge_due: "Er\u00e4p\u00e4iv\u00e4merkit", ed_badge_recurrence: "Toistomerkit", ed_badge_person: "Henkilö", ed_badge_tags: "Tunnistemerkit", ed_badge_reminders: "Muistutusmerkit",
     ed_sec_defaults: "Oletukset",
@@ -1371,6 +1408,8 @@ const _TRANSLATIONS = {
     ed_defaults_hint: "Koskee jokaista listan uutta teht\u00e4v\u00e4\u00e4 luontitavasta riippumatta. Muutokset tallennetaan heti.", ed_defaults_saved: "Tallennettu", ed_defaults_load_failed: "Oletuksia ei voitu ladata", ed_defaults_save_failed: "Tallennus ep\u00e4onnistui",
     confirm_complete_msg: "Merkit\u00e4\u00e4nk\u00f6 \u201d{0}\u201d valmiiksi?",
     confirm_complete_ok: "Merkitse valmiiksi",
+    confirm_delete_task_msg: "Poistetaanko \u201d{0}\u201d? T\u00e4t\u00e4 ei voi perua.",
+    confirm_delete_task_ok: "Poista",
     ed_hint: "Uusia listoja voi luoda kohdassa Asetukset \u2192 Integraatiot \u2192 Home Tasks.",
     tags: "Tunnisteet", add_tag: "+ Lis\u00e4\u00e4 tunniste", tag_placeholder: "Uusi tunniste...", remove_tag: "Poista", tag_suggestions_label: "Olemassa olevat tunnisteet", tag_no_matches: "Ei vastaavia tunnisteita",
     new_sub_item: "Uusi aliteht\u00e4v\u00e4", remove_reminder: "Poista muistutus",
@@ -1457,6 +1496,7 @@ const _TRANSLATIONS = {
     ed_show_sub_items: "Alfeladatok", ed_show_person: "Szem\u00e9lyek",
     ed_auto_delete: "K\u00e9sz feladatok azonnali t\u00f6rl\u00e9se", ed_compact: "Kompakt", ed_show_tags: "C\u00edmk\u00e9k",
     ed_confirm_complete: "Meger\u0151s\u00edt\u00e9s befejez\u00e9s el\u0151tt", ed_tap_to_complete: "Koppintás a sorra befejezi",
+    ed_confirm_delete: "Meger\u0151s\u00edt\u00e9s t\u00f6rl\u00e9s el\u0151tt",
     ed_show_add_due: "Hat\u00e1rid\u0151 hozz\u00e1ad\u00e1skor",
     ed_max_height: "Max. magass\u00e1g (px, 0 = korl\u00e1tlan)", ed_badge_priority: "Priorit\u00e1s-c\u00edmk\u00e9k", ed_badge_progress: "Folyamat-c\u00edmk\u00e9k", ed_badge_due: "Hat\u00e1rid\u0151-c\u00edmk\u00e9k", ed_badge_recurrence: "Ism\u00e9tl\u00e9s-c\u00edmk\u00e9k", ed_badge_person: "Személy", ed_badge_tags: "C\u00edmke-chipek", ed_badge_reminders: "Eml\u00e9keztet\u0151-c\u00edmk\u00e9k",
     ed_sec_defaults: "Alap\u00e9rtelmez\u00e9sek",
@@ -1473,6 +1513,8 @@ const _TRANSLATIONS = {
     ed_defaults_hint: "A lista minden \u00faj feladat\u00e1ra \u00e9rv\u00e9nyes, b\u00e1rhogyan is j\u00f6n l\u00e9tre. A m\u00f3dos\u00edt\u00e1sok azonnal ment\u00e9sre ker\u00fclnek.", ed_defaults_saved: "Mentve", ed_defaults_load_failed: "Az alap\u00e9rtelmez\u00e9sek bet\u00f6lt\u00e9se sikertelen", ed_defaults_save_failed: "A ment\u00e9s sikertelen",
     confirm_complete_msg: "Megjel\u00f6l\u00f6d \u201e{0}\u201d-t k\u00e9szk\u00e9nt?",
     confirm_complete_ok: "K\u00e9sz",
+    confirm_delete_task_msg: "T\u00f6rl\u00f6d a(z) \u201e{0}\u201d feladatot? Ez nem vonhat\u00f3 vissza.",
+    confirm_delete_task_ok: "T\u00f6rl\u00e9s",
     ed_hint: "\u00daj list\u00e1k a Be\u00e1ll\u00edt\u00e1sok \u2192 Integr\u00e1ci\u00f3k \u2192 Home Tasks alatt hozhat\u00f3k l\u00e9tre.",
     tags: "C\u00edmk\u00e9k", add_tag: "+ C\u00edmke hozz\u00e1ad\u00e1sa", tag_placeholder: "\u00daj c\u00edmke...", remove_tag: "Elt\u00e1vol\u00edt\u00e1s", tag_suggestions_label: "L\u00e9tez\u0151 c\u00edmk\u00e9k", tag_no_matches: "Nincs egyez\u0151 c\u00edmke",
     new_sub_item: "\u00daj alfeladat", remove_reminder: "Eml\u00e9keztet\u0151 elt\u00e1vol\u00edt\u00e1sa",
@@ -1579,6 +1621,7 @@ const _TRANSLATIONS = {
     ed_show_person: "Personen",
     ed_auto_delete: "Erledigte sofort l\u00f6schen",
     ed_confirm_complete: "Vor dem Erledigen nachfragen", ed_tap_to_complete: "Zeile antippen zum Erledigen",
+    ed_confirm_delete: "Vor dem Löschen nachfragen",
     ed_show_add_due: "F\u00e4lligkeit beim Anlegen",
     ed_max_height: "Max. H\u00f6he (px, 0 = unbegrenzt)", ed_badge_priority: "Priorit\u00e4ts-Chips", ed_badge_progress: "Fortschritts-Chips", ed_badge_due: "F\u00e4lligkeits-Chips", ed_badge_recurrence: "Wiederholungs-Chips", ed_badge_person: "Person", ed_badge_tags: "Tag-Chips", ed_badge_reminders: "Erinnerungs-Chips",
     ed_sec_defaults: "Standardwerte",
@@ -1595,6 +1638,8 @@ const _TRANSLATIONS = {
     ed_defaults_hint: "Gilt f\u00fcr jede neue Aufgabe dieser Liste \u2014 egal wie sie angelegt wird (Karte, Service, Sprache, Todo). \u00c4nderungen werden sofort gespeichert.", ed_defaults_saved: "Gespeichert", ed_defaults_load_failed: "Defaults konnten nicht geladen werden", ed_defaults_save_failed: "Speichern fehlgeschlagen",
     confirm_complete_msg: "„{0}“ als erledigt markieren?",
     confirm_complete_ok: "Erledigen",
+    confirm_delete_task_msg: "„{0}“ löschen? Das kann nicht rückgängig gemacht werden.",
+    confirm_delete_task_ok: "Löschen",
     ed_compact: "Kompakt",
     ed_show_tags: "Tags",
     ed_hint: "Neue Listen k\u00f6nnen unter Einstellungen \u2192 Integrationen \u2192 Home Tasks erstellt werden.",
@@ -3269,7 +3314,7 @@ class HomeTasksCard extends HTMLElement {
   // once. `body` nodes go between the message and the action row; `resolveOk`
   // computes the OK button's resolution value; every cancel path resolves
   // null.
-  _modalDialog({ message, okLabel, body = [], resolveOk }) {
+  _modalDialog({ message, okLabel, body = [], resolveOk, danger = false }) {
     return new Promise((resolve) => {
       const dialog = document.createElement("dialog");
       dialog.className = "ht-confirm";
@@ -3282,7 +3327,7 @@ class HomeTasksCard extends HTMLElement {
         resolve(val);
       };
       const cancelBtn = this._el("button", { className: "ht-confirm-btn", textContent: this._t("dialog_cancel") });
-      const okBtn = this._el("button", { className: "ht-confirm-btn primary", textContent: okLabel });
+      const okBtn = this._el("button", { className: "ht-confirm-btn primary" + (danger ? " danger" : ""), textContent: okLabel });
       cancelBtn.addEventListener("click", () => finish(null));
       okBtn.addEventListener("click", () => finish(resolveOk()));
       dialog.addEventListener("cancel", (e) => { e.preventDefault(); finish(null); }); // Esc
@@ -3302,8 +3347,8 @@ class HomeTasksCard extends HTMLElement {
     });
   }
 
-  _confirmDialog(message, okLabel) {
-    return this._modalDialog({ message, okLabel, resolveOk: () => true }).then((v) => !!v);
+  _confirmDialog(message, okLabel, danger = false) {
+    return this._modalDialog({ message, okLabel, danger, resolveOk: () => true }).then((v) => !!v);
   }
 
   // Per-column max_height (issues #33 / #34): cap only the task body and let
@@ -8008,7 +8053,25 @@ class HomeTasksCard extends HTMLElement {
       className: "delete-task-btn",
       textContent: this._t("delete_task"),
     });
-    deleteBtn.addEventListener("click", () => {
+    deleteBtn.addEventListener("click", async () => {
+      // Manual delete only (auto_delete_completed goes through
+      // _toggleTaskCore). Cancel leaves the detail open; the flag stops a
+      // second click from stacking another dialog.
+      if (col.confirm_delete !== false) {
+        if (this._deleteConfirmOpen) return;
+        this._deleteConfirmOpen = true;
+        let ok;
+        try {
+          ok = await this._confirmDialog(
+            this._t("confirm_delete_task_msg", task.title),
+            this._t("confirm_delete_task_ok"),
+            true,
+          );
+        } finally {
+          this._deleteConfirmOpen = false;
+        }
+        if (!ok) return;
+      }
       // Close the sheet first (no-op for the inline list view) so the popup
       // doesn't linger showing a task being deleted; synchronous so the delete's
       // re-render can't re-attach it.
@@ -9907,6 +9970,9 @@ class HomeTasksCard extends HTMLElement {
         color: var(--text-primary-color, #fff);
       }
       .ht-confirm-btn.primary:hover { filter: brightness(1.08); }
+      .ht-confirm-btn.primary.danger {
+        background: var(--error-color, #db4437); border-color: var(--error-color, #db4437);
+      }
       .mb-header {
         display: flex; align-items: center; gap: 8px;
         padding: 16px 8px 16px 20px; flex-shrink: 0;
@@ -11481,6 +11547,7 @@ class HomeTasksCardEditor extends HTMLElement {
           makeToggle("badge-reminders", "ed_badge_reminders", "badge_reminders", true),
           makeToggle("auto-delete", "ed_auto_delete", "auto_delete_completed", false),
           makeToggle("confirm-complete", "ed_confirm_complete", "confirm_complete", false),
+          makeToggle("confirm-delete", "ed_confirm_delete", "confirm_delete", true),
           ...(col.view_mode === "tiles"
             ? [makeToggle("show-tile-title", "ed_show_tile_title", "show_tile_title", true)]
             // Tiles already complete on a tap; the list needs the switch.

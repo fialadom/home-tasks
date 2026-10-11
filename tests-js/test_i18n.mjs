@@ -49,6 +49,7 @@ test("recent feature keys are translated in every language", () => {
     "ed_layout", "ed_layout_columns", "ed_layout_tabs", "ed_tab_counts",
     "new_board", "ed_tab_add",
     "person_unassigned", "ed_show_unassigned_filter",
+    "confirm_delete_task_msg", "ed_confirm_delete",
   ];
   for (const lang of Object.keys(t)) {
     for (const key of required) {
