@@ -2,7 +2,7 @@
   "config": {
     "step": {
       "user": {
-        "title": "Home Tasks",
+        "title": "Přístavní úkoly",
         "description": "Choose what you want to set up.",
         "menu_options": {
           "native": "Create a new task list",

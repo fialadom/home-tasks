@@ -2,7 +2,7 @@
   "config": {
     "step": {
       "user": {
-        "title": "Home Tasks",
+        "title": "P\u0159\u00edstavn\u00ed \u00fakoly",
         "description": "W\u00e4hle aus, was du einrichten m\u00f6chtest.",
         "menu_options": {
           "native": "Neue Aufgabenliste erstellen",

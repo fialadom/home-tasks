@@ -1,4 +1,6 @@
-# Home Tasks
+# Přístavní úkoly
+
+> Fork of [L3t4l3s/home-tasks](https://github.com/L3t4l3s/home-tasks) with a board view, list tabs and comments with @mentions (specs in `docs/fork/`). Same integration domain `home_tasks`, so it replaces the upstream install in place and keeps every list and its data.
 
 [![hacs_badge](https://img.shields.io/badge/HACS-Default-41BDF5.svg)](https://hacs.xyz/)
 [![Validate](https://github.com/L3t4l3s/home-tasks/actions/workflows/validate.yaml/badge.svg)](https://github.com/L3t4l3s/home-tasks/actions/workflows/validate.yaml)
